@@ -173,7 +173,7 @@ const Footer = () => {
                 alt="AgroTech AI Logo"
               />
               <span className="text-2xl font-bold bg-gradient-to-r from-[#1f2937] to-[#b6dbfc] bg-clip-text text-transparent group-hover:from-[#133859] group-hover:to-[#b6dbfc] transition-all duration-300">
-                Med Space
+                SehatBridge
               </span>
             </Link>
             <p className="text-sm leading-relaxed max-w-xs">
@@ -333,7 +333,7 @@ const Footer = () => {
             <FaRegCopyright className="mx-1" /> {currentYear} All Rights
             Reserved
             <span className="font-bold ml-2 bg-[#b6dbfc] text-[#1f2937] px-2 py-1 rounded transition-all duration-300 hover:bg-[#1f2937] hover:text-[#b6dbfc]">
-              Medi Connect
+              SehatBridge
             </span>
           </p>
         </div>

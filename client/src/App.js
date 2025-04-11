@@ -7,8 +7,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout';
 import { useState, useEffect } from 'react';
 import Preloader from './components/PreLoader';
+import { replaceTextInDOM } from './utils/replaceText';
+
+
 
 function App() {
+
+  useEffect(() => {
+    replaceTextInDOM();
+  }, []);
+
   // Preloader state
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(true);
 
