@@ -177,7 +177,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-sm leading-relaxed max-w-xs">
-              The Med Space platform simplifies hospital management with
+              The SehatBridge platform simplifies hospital management with
               efficient queuing models, lab test, OPDs, and inventory management
               for medicines and consumables.
             </p>
@@ -318,7 +318,7 @@ const Footer = () => {
               ? 'text-gray-300 text-sm md:text-base mt-2'
               : 'text-gray-900 text-sm md:text-base mt-2'
           } `}>
-            “The information provided on Med-Space is intended for general
+            “The information provided on SehatBridge is intended for general
             informational purposes only and should not be considered as medical
             advice, diagnosis, or treatment. Always seek the advice of a
             qualified healthcare provider for any medical condition or

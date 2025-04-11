@@ -13,7 +13,7 @@ const Preloader = () => {
           className="animate-stroke"
           style={{ fontWeight: "bold" }}
         >
-          SehatBridge
+          Sehat🩺Bridge
         </text>
       </svg>
     </div>
