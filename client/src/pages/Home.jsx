@@ -146,7 +146,7 @@ function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3, type: 'spring' }}
             >
-              Skip the queue and get the care you need faster.
+              Skip ! the queue and get the care you need faster.
             </motion.p>
 
             <motion.div
