@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/Navbar.css';
 import { UserContext } from '../store/userContext';
@@ -16,22 +16,24 @@ import { MdLogin, MdOutlineLocalHospital } from 'react-icons/md';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const Navbar = () => {
-  const {
-    user,
-    isAuthenticated = true,
-    handleLogout,
-  } = useContext(UserContext);
+  const { user, isAuthenticated, handleLogout } = useContext(UserContext);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    document.body.style.overflow = isSidebarOpen ? 'hidden' : 'auto';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isSidebarOpen]);
+
   return (
     <>
-      {/* Logo positioned at the top left corner */}
       <div className="fixed top-0 left-0 z-[101] m-5">
-        <NavLink to="/">
+        <NavLink to="/" end>
           <img
             className="h-12 md:h-16"
             alt="medi-connects logo"
@@ -40,34 +42,40 @@ const Navbar = () => {
         </NavLink>
       </div>
 
-      {/* Sidebar toggle button positioned at the right */}
       <div className="fixed top-5 right-5 z-[102] text-4xl">
         {isSidebarOpen ? (
-          <IoClose className="cursor-pointer" onClick={toggleSidebar} /> // Close icon when sidebar is open
+          <IoClose
+            className="cursor-pointer"
+            onClick={toggleSidebar}
+            aria-label="Close sidebar"
+            role="button"
+          />
         ) : (
-          <IoMenu className="cursor-pointer" onClick={toggleSidebar} /> // Menu icon when sidebar is closed
+          <IoMenu
+            className="cursor-pointer"
+            onClick={toggleSidebar}
+            aria-label="Open sidebar"
+            role="button"
+          />
         )}
       </div>
 
-      {/* Sidebar */}
       <div
         className={`fixed top-0 right-0 z-[100] h-full w-[75vw] sm:w-[60vw] md:w-[40vw] bg-[linear-gradient(90deg,_#667eea_0%,_#764ba2_100%)] text-white transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
-        {/* Sidebar content */}
         <div className="p-8 pt-20 space-y-8 text-lg font-medium">
-          {/* Home link */}
           <NavLink
             className={({ isActive }) =>
               `${isActive ? 'border-b border-white ' : ''} flex items-center gap-4 text-xl`
             }
             to="/"
-            onClick={toggleSidebar} // Close sidebar after clicking the link
+            end
+            onClick={toggleSidebar}
           >
             <FaHome size={24} /> <span>Home</span>
           </NavLink>
 
-          {/* About link */}
           <NavLink
             className={({ isActive }) =>
               `${isActive ? 'border-b border-white ' : ''} flex items-center gap-4 text-xl`
@@ -78,7 +86,6 @@ const Navbar = () => {
             <AiOutlineInfoCircle size={24} /> <span>About</span>
           </NavLink>
 
-          {/* Conditional rendering for authenticated users */}
           {isAuthenticated ? (
             <>
               <NavLink
@@ -91,7 +98,6 @@ const Navbar = () => {
                 <FaUser size={24} /> <span>Profile</span>
               </NavLink>
 
-              {/* Hospitals link for 'user' role */}
               {user && user?.role === 'user' && (
                 <NavLink
                   className={({ isActive }) =>
@@ -104,7 +110,6 @@ const Navbar = () => {
                 </NavLink>
               )}
 
-              {/* OPD Panel link for 'hospital' role */}
               {user && user?.role === 'hospital' && (
                 <NavLink
                   className={({ isActive }) =>
@@ -129,7 +134,6 @@ const Navbar = () => {
             </NavLink>
           )}
 
-          {/* Authentication buttons */}
           {isAuthenticated ? (
             <button
               className="bg-white text-black px-5 py-2 rounded-lg font-bold w-full text-left text-lg"
@@ -157,7 +161,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Footer */}
         <div className="absolute bottom-0 w-full bg-gradient-to-r from-blue-500 to-purple-600 p-4 text-white text-center">
           <div className="flex justify-center gap-6 mb-2">
             <a

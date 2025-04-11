@@ -325,7 +325,7 @@ const ProfilePage = () => {
                 required
                 onChange={handleDoctorDataChange}
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Select Department
                 </option>
                 <option value="cardiology">Cardiology</option>

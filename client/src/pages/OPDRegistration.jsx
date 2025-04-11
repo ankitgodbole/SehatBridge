@@ -186,8 +186,27 @@ function OPDRegistrationForm() {
       .then((response) => {
         console.log('Successfully registered!', response.data);
         setRegistrationDetails(submissionData);
-        setAppointmentDetails(response.data);
-        setShowModal(true); // Show the modal after successful registration
+      
+        // ✅ Structured assignment to prevent 'undefined' errors
+        setAppointmentDetails({
+          appointment: {
+            date: response.data.appointment?.date || formData.date || 'N/A',
+            reason: response.data.appointment?.reason || formData.reason || 'N/A',
+          },
+          hospital: {
+            name: response.data.hospital?.name || 'Pending Assignment',
+            phone: response.data.hospital?.phone || 'Not Available',
+            address: {
+              street: response.data.hospital?.address?.street || 'Not Provided',
+              city: response.data.hospital?.address?.city || 'Not Provided',
+              state: response.data.hospital?.address?.state || 'Not Provided',
+              postalCode: response.data.hospital?.address?.postalCode || 'Not Provided',
+            },
+          },
+        });
+        
+      
+        setShowModal(true);
         setFormData({
           name: '',
           email: '',
@@ -202,6 +221,7 @@ function OPDRegistrationForm() {
           report: [],
         });
       })
+      
       .catch((error) => {
         console.error('There was an error registering!', error);
         alert('Registration failed. Please try again.');
@@ -210,86 +230,56 @@ function OPDRegistrationForm() {
         setIsSubmitting(false);
       });
   };
-
+  console.log("registrationDetails:", registrationDetails);
+  console.log("appointmentDetails:", appointmentDetails);
+  
+  
   const downloadPDF = () => {
+    if (!registrationDetails || !appointmentDetails) {
+      alert('Please complete the registration first.');
+      return;
+    }
+  
     const doc = new jsPDF();
-    
-    // Add light cream background for main content
-    doc.setFillColor(252, 248, 230); // Light cream for body
+  
+    // Backgrounds
+    doc.setFillColor(252, 248, 230);
     doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
-    
-    // Add darker header background for logo
-    doc.setFillColor(41, 128, 185); // Professional blue for header
+  
+    doc.setFillColor(41, 128, 185);
     doc.rect(0, 0, doc.internal.pageSize.width, 45, 'F');
-    
-    // Set text color to white for header content
+  
     doc.setTextColor(255, 255, 255);
-    
-    // Logo (add your base64 logo image here)
     var img = new Image();
     img.src = '/1.png';
     doc.addImage(img, 'png', 85, 5, 40, 15);
-    
-    // Header text in white
     doc.setFontSize(14);
     doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
     doc.setFontSize(10);
     doc.text('Generated from Med-Space', 105, 36, { align: 'center' });
-    
-    // Switch to dark text for body content
-    doc.setTextColor(44, 62, 80); // Dark blue-grey for better readability
-    
+  
     // Body
+    doc.setTextColor(44, 62, 80);
     doc.setFontSize(12);
     doc.text('OPD Registration Details', 20, 60);
-    doc.setDrawColor(41, 128, 185); // Blue line color
-    doc.line(20, 65, 190, 65); // Decorative line under section header
-    
-    doc.text(`Name: ${registrationDetails.name}`, 20, 75);
-    doc.text(`Age: ${registrationDetails.age}`, 20, 85);
-    doc.text(
-        `Date of Appointment: ${appointmentDetails.appointment.date}`,
-        20,
-        95
-    );
-    doc.text(`Reason: ${appointmentDetails.appointment.reason}`, 20, 105);
-    doc.text(`Hospital: ${appointmentDetails.hospital.name}`, 20, 115);
-    doc.text(
-        `Address: ${appointmentDetails.hospital.address.street}, ${appointmentDetails.hospital.address.city}, ${appointmentDetails.hospital.address.state}, ${appointmentDetails.hospital.address.postalCode}`,
-        20,
-        125
-    );
-    doc.text(`Contact: ${appointmentDetails.hospital.phone}`, 20, 135);
-    
-    // Footer with blue background
-    const pageCount = doc.internal.getNumberOfPages();
-    doc.setFontSize(10);
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        
-        // Add footer background
-        doc.setFillColor(41, 128, 185);
-        doc.rect(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, 20, 'F');
-        
-        // Footer text in white
-        doc.setTextColor(255, 255, 255);
-        doc.text(
-            `Page ${i} of ${pageCount}`,
-            doc.internal.pageSize.width / 2,
-            doc.internal.pageSize.height - 12,
-            { align: 'center' }
-        );
-        doc.text(
-            'Thank you for choosing Our Hospital. Please bring this document on the day of your appointment.\n 2024 Med-Space. All rights reserved.',
-            105,
-            doc.internal.pageSize.height - 6,
-            { align: 'center' }
-        );
-    }
-    
-    // Save PDF
-    doc.save('appointment-details.pdf');
+    doc.setDrawColor(41, 128, 185);
+    doc.line(20, 65, 190, 65);
+  
+    const { name, age } = registrationDetails;
+    const { appointment, hospital } = appointmentDetails;
+    const { address } = hospital;
+  
+    doc.text(`Name: ${name || 'N/A'}`, 20, 75);
+    doc.text(`Age: ${age || 'N/A'}`, 20, 85);
+    doc.text(`Date of Appointment: ${appointment?.date || 'N/A'}`, 20, 95);
+    doc.text(`Reason: ${appointment?.reason || 'N/A'}`, 20, 105);
+    doc.text(`Hospital: ${hospital?.name || 'N/A'}`, 20, 115);
+    doc.text(`Address: ${address?.street || 'N/A'}, ${address?.city || 'N/A'}, ${address?.state || 'N/A'}, ${address?.postalCode || 'N/A'}`, 20, 125);
+    doc.text(`Contact: ${hospital?.phone || 'N/A'}`, 20, 135);
+  
+    doc.save('Appointment_Confirmation.pdf');
   };
+  
 
 
   return (
@@ -616,13 +606,14 @@ function OPDRegistrationForm() {
             </button>
 
             {/* PDF download icon in the lower right corner */}
-            <div className="download-icon" onClick={downloadPDF}>
-              <AiOutlineDownload
-                className={dark === 'dark' ? 'text-yellow-400' : 'text-black'}
-                size={32}
-                color="#007bff"
-              />
-            </div>
+            <div className="download-icon" onClick={() => downloadPDF(registrationDetails, appointmentDetails)}>
+  <AiOutlineDownload
+    className={dark === 'dark' ? 'text-yellow-400' : 'text-black'}
+    size={32}
+    color="#007bff"
+  />
+</div>
+
 
             {/* Footer */}
             <footer

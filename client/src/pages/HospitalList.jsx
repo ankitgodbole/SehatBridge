@@ -56,26 +56,47 @@ const HospitalsList = () => {
     fetchHospitals();
   }, []);
 
-  // Handle appointment booking
   const handleBooking = async (hospitalId) => {
+    
     try {
-      let userId = user ? user._id : '';
+      const userId = user ? user._id : '';
+      if (!userId) {
+        alert("User not logged in");
+        return;
+      }
+  
+      // Validate required booking data
+      if (!bookingData.date || !bookingData.reason) {
+        alert("Please enter both appointment date and reason.");
+        return;
+      }
+  
+      const payload = {
+        userId,
+        ...bookingData,
+      };
+  
+      console.log("📤 Sending appointment data:", payload);
+  
       const response = await axios.post(
         databaseUrls.hospitals.bookHospital.replace('_id', hospitalId),
-        {
-          userId,
-          ...bookingData,
-        },
+        payload
       );
+  
       alert(response.data.message);
       setSelectedHospital(null);
       navigate(`/profile`);
     } catch (error) {
-      alert('Error booking appointment');
-      console.error(error);
+      if (error.response?.data?.message) {
+        alert(`❌ Error: ${error.response.data.message}`);
+        console.error("🔍 Details:", error.response.data.errors || error.response.data);
+      } else {
+        alert('❗ Unexpected error occurred');
+        console.error(error);
+      }
     }
   };
-
+  
   const handleChange = (e) => {
     setBookingData({
       ...bookingData,
@@ -313,12 +334,13 @@ const HospitalsList = () => {
                     onChange={handleChange}
                     required
                   />
-                  <button
-                    className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-                    onClick={() => handleBooking(hospital._id)}
-                  >
-                    Confirm Booking
-                  </button>
+                 <button
+  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+  onClick={() => handleBooking(hospital._id)}
+>
+  Confirm Booking
+</button>
+
                 </div>
               )}
             </div>

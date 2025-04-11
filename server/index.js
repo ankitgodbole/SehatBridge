@@ -11,6 +11,7 @@ const authRouter = require("./routes/auth/auth");
 const profileRouter = require("./routes/user/profile");
 const hospitalRouter = require("./routes/hospital/hospital");
 const appointmentRouter = require("./routes/appointments/appointment");
+const emergencyRouter = require("./routes/hospital/hospitalapi");
 const otherroutes = require("./routes/otherroutes/otherroutes");
 // const hospitalroute = require("./modules/hospital/index");   ⭕ ***Deprecated***
 const client = require("prom-client");
@@ -40,7 +41,7 @@ const port = process.env.PORT || 8081;
 corsConfig(app);
 
 // Body Parser Middleware
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(express.json());
 app.use(helmet());
@@ -89,8 +90,14 @@ app.get(
   async (req, res) => {
     try {
       console.log("check");
+      // const { id, displayName, emails } = req.user;
+      // const email = emails[0].value;
       const { id, displayName, emails } = req.user;
+      if (!emails || emails.length === 0) {
+        return res.status(400).json({ message: "No email found in Google profile." });
+      }
       const email = emails[0].value;
+
       console.log("check 1");
       let userOrHospital =
         (await User.findOne({ email })) || (await Hospital.findOne({ email }));
@@ -167,11 +174,23 @@ app.get("/metrics", async (_, res) => {
 app.use("/auth", authRouter);
 app.use("/auth", profileRouter);
 
-// Hospital Routes
-app.use("/hospitalapi", hospitalRouter);
+// // Hospital Routes
+// app.use("/hospitalapi", hospitalRouter);
 
-// Appointment Routes
-app.use("/hospitalapi", appointmentRouter);
+// // Appointment Routes
+// app.use("/hospitalapi", appointmentRouter);
+
+app.use("/hospitalapi/hospitals", hospitalRouter);
+app.use("/hospitalapi/appointments", appointmentRouter);
+app.use("/hospitalapi/emergency", emergencyRouter);    
+app.use("/hospitalapi", require("./routes/hospital/hospitalapi"));
+
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log(`Registered route: ${r.route.path}`);
+  }
+});
+
 
 // other routes
 app.use("/otherroutes", otherroutes)

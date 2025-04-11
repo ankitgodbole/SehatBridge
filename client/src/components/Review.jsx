@@ -73,33 +73,49 @@ const reviews = [
   },
 ];
 
-// Duplicate the first and last reviews for infinite scroll effect
 const infiniteReviews = [reviews[reviews.length - 1], ...reviews, reviews[0]];
 
 const ReviewCard = ({ review, dark }) => (
   <div
-    className={`rounded-lg hover:shadow-xl p-4 flex flex-col justify-between h-full transition-shadow duration-300 transform hover:scale-105 shadow-[0_2px_10px_rgba(0,0,0,0.3)] ${dark === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+    className={`rounded-lg hover:shadow-xl p-4 flex flex-col justify-between h-full transition-shadow duration-300 transform hover:scale-105 shadow-[0_2px_10px_rgba(0,0,0,0.3)] ${
+      dark === 'dark' ? 'bg-gray-800' : 'bg-white'
+    }`}
   >
     <div>
       <div className="flex items-center mb-4">
         <img
           src={review.image}
           alt={review.name}
+          onError={(e) => (e.target.src = '/default-avatar.png')}
           className="w-16 h-16 rounded-full border-2 mr-4 object-cover"
         />
         <div>
-          <h3 className={`font-semibold text-lg ${dark === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>
+          <h3
+            className={`font-semibold text-lg ${
+              dark === 'dark' ? 'text-gray-300' : 'text-gray-800'
+            }`}
+          >
             {review.name}
           </h3>
-          <p className={`text-sm ${dark === 'dark' ? 'text-yellow-400' : 'text-blue-500'}`}>
+          <p
+            className={`text-sm ${
+              dark === 'dark' ? 'text-yellow-400' : 'text-blue-500'
+            }`}
+          >
             {review.role}
           </p>
         </div>
       </div>
-      <p className={`text-xl font-bold mb-2 ${dark === 'dark' ? 'text-gray-300' : 'text-gray-800'}`}>
+      <p
+        className={`text-xl font-bold mb-2 ${
+          dark === 'dark' ? 'text-gray-300' : 'text-gray-800'
+        }`}
+      >
         "{review.quote}"
       </p>
-      <p className={`mb-4 ${dark === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>{review.review}</p>
+      <p className={`mb-4 ${dark === 'dark' ? 'text-gray-200' : 'text-gray-600'}`}>
+        {review.review}
+      </p>
     </div>
     <div className="flex items-center">
       {[...Array(5)].map((_, i) => (
@@ -133,9 +149,9 @@ const Review = () => {
   const handleTransitionEnd = () => {
     setIsTransitioning(false);
     if (currentIndex === infiniteReviews.length - 1) {
-      setCurrentIndex(1); // Reset to the first real review
+      setCurrentIndex(1);
     } else if (currentIndex === 0) {
-      setCurrentIndex(infiniteReviews.length - 2); // Reset to the last real review
+      setCurrentIndex(infiniteReviews.length - 2);
     }
   };
 
@@ -147,7 +163,11 @@ const Review = () => {
   return (
     <section className="py-16 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <h2 className={`text-4xl font-bold text-center mb-12 text-gray-800 ${dark === 'dark' ? 'text-yellow-400' : 'text-blue-600'}`}>
+        <h2
+          className={`text-4xl font-bold text-center mb-12 text-gray-800 ${
+            dark === 'dark' ? 'text-yellow-400' : 'text-blue-600'
+          }`}
+        >
           What Our Community Says
         </h2>
         <div className="relative">
@@ -161,7 +181,12 @@ const Review = () => {
               onTransitionEnd={handleTransitionEnd}
             >
               {infiniteReviews.map((review, index) => (
-                <div key={index} className={`w-full ${isSmallScreen ? 'flex-shrink-0' : 'sm:w-1/3 flex-shrink-0'} px-2`}>
+                <div
+                  key={index}
+                  className={`w-full ${
+                    isSmallScreen ? 'flex-shrink-0' : 'sm:w-1/3 flex-shrink-0'
+                  } px-2`}
+                >
                   <ReviewCard review={review} dark={dark} />
                 </div>
               ))}
@@ -169,15 +194,25 @@ const Review = () => {
           </div>
           <button
             onClick={prevReview}
-            className={`absolute top-1/2 -left-4 transform -translate-y-1/2 rounded-full p-2 shadow-md ml-1 ${dark === 'dark' ? 'bg-gray-600 hover:bg-gray-500' : 'bg-white hover:bg-gray-100'}`}
+            aria-label="Previous review"
+            className={`absolute top-1/2 -left-4 transform -translate-y-1/2 rounded-full p-2 shadow-md ml-1 ${
+              dark === 'dark' ? 'bg-gray-600 hover:bg-gray-500' : 'bg-white hover:bg-gray-100'
+            }`}
           >
-            <ChevronLeft className={`w-6 h-6 ${dark === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <ChevronLeft
+              className={`w-6 h-6 ${dark === 'dark' ? 'text-white' : 'text-gray-600'}`}
+            />
           </button>
           <button
             onClick={nextReview}
-            className={`absolute top-1/2 -right-4 transform -translate-y-1/2 rounded-full p-2 shadow-md mr-1 ${dark === 'dark' ? 'bg-gray-600 hover:bg-gray-500' : 'bg-white hover:bg-gray-100'}`}
+            aria-label="Next review"
+            className={`absolute top-1/2 -right-4 transform -translate-y-1/2 rounded-full p-2 shadow-md mr-1 ${
+              dark === 'dark' ? 'bg-gray-600 hover:bg-gray-500' : 'bg-white hover:bg-gray-100'
+            }`}
           >
-            <ChevronRight className={`w-6 h-6 ${dark === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <ChevronRight
+              className={`w-6 h-6 ${dark === 'dark' ? 'text-white' : 'text-gray-600'}`}
+            />
           </button>
         </div>
       </div>

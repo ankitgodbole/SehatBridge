@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { mode } from '../store/atom'; // Importing the mode atom for dark mode
+import { mode } from '../store/atom';
 import RegistrationContext from '../store/RegistrationContext';
 import { notify } from '../components/notification';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,9 @@ const btnDivStyle = {
   marginTop: '5px',
 };
 
-const renderFields = (key, value, dark) => {
+const renderFields = (key, value, dark, parentKey = '') => {
+  const fullKey = parentKey ? `${parentKey}-${key}` : key;
+
   if (
     (typeof value === 'string' && value.trim() === '') ||
     (Array.isArray(value) && value.length === 0) ||
@@ -22,31 +24,31 @@ const renderFields = (key, value, dark) => {
     (typeof value === 'string' && key === 'password') ||
     key === 'confirmPassword'
   ) {
-    return null; // Don't render empty fields
+    return null;
   }
 
   if (typeof value === 'object' && !Array.isArray(value)) {
     return (
-      <div key={key}>
+      <div key={fullKey}>
         {Object.entries(value).map(([nestedKey, nestedValue]) =>
-          renderFields(nestedKey, nestedValue, dark),
+          renderFields(nestedKey, nestedValue, dark, fullKey)
         )}
       </div>
     );
   } else if (Array.isArray(value)) {
     return (
-      <div key={key}>
+      <div key={fullKey}>
         <h3
           className={`font-bold mb-1 ${dark === 'dark' ? 'text-yellow-400' : 'text-gray-700'}`}
         >
           {`${key.charAt(0).toUpperCase() + key.slice(1)}:`}
         </h3>
-        {value.map((item) => (
+        {value.map((item, idx) => (
           <h3
-            key={key}
+            key={`${fullKey}-${idx}`}
             className={`ml-1 mb-1 ${dark === 'dark' ? 'text-yellow-400' : 'text-gray-500'}`}
           >
-            {`${item}`}
+            {item}
           </h3>
         ))}
       </div>
@@ -54,6 +56,7 @@ const renderFields = (key, value, dark) => {
   } else {
     return (
       <h1
+        key={fullKey}
         className={`mb-2 font-bold ${dark === 'dark' ? 'text-yellow-400' : 'text-gray-700'}`}
       >
         {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
@@ -63,11 +66,10 @@ const renderFields = (key, value, dark) => {
 };
 
 function ReviewDetails() {
-  const { basicDetails, otherDetails, prevStep } =
-    useContext(RegistrationContext);
+  const { basicDetails, otherDetails, prevStep } = useContext(RegistrationContext);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dark = useRecoilValue(mode); // Using Recoil state for dark mode
+  const dark = useRecoilValue(mode);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -75,6 +77,7 @@ function ReviewDetails() {
     const endpoint = databaseUrls.auth.register;
     const payload = { ...basicDetails, ...otherDetails };
     setIsLoading(true);
+
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -107,12 +110,12 @@ function ReviewDetails() {
       >
         <div className="col-md-6">
           {Object.entries(basicDetails).map(([key, value]) =>
-            renderFields(key, value, dark),
+            renderFields(key, value, dark)
           )}
         </div>
         <div className="col-md-6">
           {Object.entries(otherDetails).map(([key, value]) =>
-            renderFields(key, value, dark),
+            renderFields(key, value, dark)
           )}
         </div>
       </div>
@@ -120,11 +123,11 @@ function ReviewDetails() {
         <div style={btnDivStyle}>
           <button
             type="button"
-            className={`auth-button ${dark === 'dark' ? 'bg-gray-800 text-yellow-400' : 'bg-gray-200 text-gray-700 '} disabled:bg-slate-500`}
+            className={`auth-button ${dark === 'dark' ? 'bg-gray-800 text-yellow-400' : 'bg-gray-200 text-gray-700'} disabled:bg-slate-500`}
             onClick={prevStep}
             disabled={isLoading}
           >
-            Back 
+            Back
           </button>
           <button
             type="button"
@@ -137,11 +140,11 @@ function ReviewDetails() {
             ) : (
               <>
                 <span
-                  className="spinner-border spinner-border-sm"
+                  className="spinner-border spinner-border-sm align-middle inline-block"
                   role="status"
                   aria-hidden="true"
                 ></span>
-                <span className="ml-2">Registering</span>
+                <span className="ml-2 align-middle">Registering</span>
               </>
             )}
           </button>

@@ -7,7 +7,7 @@ import { inject } from '@vercel/analytics';
 import { RecoilRoot } from 'recoil';
 import ScrollProgressIndicator from './components/ScrollProgressIndicator';
 
-inject();
+inject(); // Inject Vercel analytics
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +16,7 @@ root.render(
     <RecoilRoot>
       <App />
     </RecoilRoot>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 
 reportWebVitals();

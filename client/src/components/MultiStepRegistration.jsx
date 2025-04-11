@@ -5,8 +5,8 @@ import { Provider } from '../store/RegistrationContext';
 import StepTwo from './StepTwo';
 import '../styles/Login.css';
 import ReviewDetails from './ReviewDetails';
-import { useRecoilValue } from 'recoil'; // Import Recoil for dark mode state
-import { mode } from '../store/atom'; // Import the dark mode atom
+import { useRecoilValue } from 'recoil';
+import { mode } from '../store/atom';
 
 const { Step } = Steps;
 
@@ -45,39 +45,28 @@ const otherDetailsInitial = {
 const validateOtherDetails = (details, userType) => {
   let missingFields = [];
 
-  // Check address fields
   if (!details.address.street) missingFields.push('Street');
   if (!details.address.city) missingFields.push('City');
   if (!details.address.state) missingFields.push('State');
   if (!details.address.postalCode) missingFields.push('Postal Code');
 
-  // User type-specific checks
   if (userType === 'user') {
     if (!details.gender) missingFields.push('Gender');
     if (!details.dob) missingFields.push('Date of Birth');
   } else if (userType === 'hospital') {
     if (details.department.length === 0) missingFields.push('Department');
-    if (details.availableServices.length === 0)
-      missingFields.push('Available Services');
+    if (details.availableServices.length === 0) missingFields.push('Available Services');
   }
-  console.log(missingFields);
 
-  // If any fields are missing, alert the user
-  return missingFields.length > 0;
+  if (missingFields.length > 0) {
+    message.warning(`Please fill the following fields: ${missingFields.join(', ')}`, 3);
+    return true;
+  }
+
+  return false;
 };
 
-const stepToShow = (step) => {
-  switch (step) {
-    case 0:
-      return <StepOne />;
-    case 1:
-      return <StepTwo />;
-    case 2:
-      return <ReviewDetails />;
-    default:
-      return null;
-  }
-};
+const stepComponents = [<StepOne />, <StepTwo />, <ReviewDetails />];
 
 function MultiStepRegistration() {
   const [basicDetails, setBasicDetails] = useState(basicDetailsInitial);
@@ -89,7 +78,7 @@ function MultiStepRegistration() {
     2: 'wait',
   });
 
-  const dark = useRecoilValue(mode); // Access the dark mode state
+  const dark = useRecoilValue(mode);
 
   const nextStep = () => {
     setCurrentStep((prev) => prev + 1);
@@ -100,12 +89,9 @@ function MultiStepRegistration() {
   };
 
   const handleNextStepValidation = (value) => {
-    console.log(value, 'val');
     if (value > currentStep) {
       switch (currentStep) {
         case 0:
-          console.log('In step 1', stepStatus, value, currentStep);
-
           if (Object.values(basicDetails).every((val) => val !== '')) {
             setStepStatus((prev) => ({
               ...prev,
@@ -114,12 +100,10 @@ function MultiStepRegistration() {
             }));
             nextStep();
           } else {
-            message.warning('Please fill all required  basic datails.', 2);
+            message.warning('Please fill all required basic details.', 2);
           }
-
           break;
         case 1:
-          console.log('In step 2', stepStatus, value, currentStep);
           if (!validateOtherDetails(otherDetails, basicDetails.type)) {
             setStepStatus((prev) => ({
               ...prev,
@@ -127,8 +111,6 @@ function MultiStepRegistration() {
               [value]: 'process',
             }));
             nextStep();
-          } else {
-            message.warning('Please fill all required  datails.', 2);
           }
           break;
         default:
@@ -158,13 +140,7 @@ function MultiStepRegistration() {
         <Steps current={currentStep} onChange={handleNextStepValidation}>
           <Step
             title={
-              <span
-                className={
-                  dark === 'dark'
-          ? ' font-bold text-purple-400'
-          : ' font-bold text-gray-900'
-                }
-              >
+              <span className={dark === 'dark' ? 'font-bold text-purple-400' : 'font-bold text-gray-900'}>
                 Basic details
               </span>
             }
@@ -172,13 +148,7 @@ function MultiStepRegistration() {
           />
           <Step
             title={
-              <span
-                className={
-                  dark === 'dark'
-          ? ' font-bold text-purple-400'
-          : ' font-bold text-gray-900'
-                }
-              >
+              <span className={dark === 'dark' ? 'font-bold text-purple-400' : 'font-bold text-gray-900'}>
                 Other details
               </span>
             }
@@ -186,13 +156,7 @@ function MultiStepRegistration() {
           />
           <Step
             title={
-              <span
-                className={
-                  dark === 'dark'
-          ? ' font-bold text-purple-400'
-          : ' font-bold text-gray-900'
-                }
-              >
+              <span className={dark === 'dark' ? 'font-bold text-purple-400' : 'font-bold text-gray-900'}>
                 Review and Register
               </span>
             }
@@ -200,7 +164,7 @@ function MultiStepRegistration() {
           />
         </Steps>
 
-        <main style={mainStyle}>{stepToShow(currentStep)}</main>
+        <main style={mainStyle}>{stepComponents[currentStep]}</main>
       </div>
     </Provider>
   );

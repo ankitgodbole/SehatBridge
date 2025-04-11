@@ -258,10 +258,15 @@ function OPDSchedule() {
                 </div>
               </motion.div>
               <div className="mt-4">
-                <OPDScheduleCard departmentName={departmentName} doctorsSchedule={
-                  hospitalData.doctors.filter((doc) => doc.department === departmentName)
-                } hospitalPhone={hospitalData.phone}/>
-              </div>
+  <OPDScheduleCard
+    departmentName={departmentName}
+    doctorsSchedule={
+      hospitalData.doctors?.filter((doc) => doc.department === departmentName) || []
+    }
+    hospitalPhone={hospitalData?.phone || ''}
+  />
+</div>
+
             </div>
           </div>
         </div>

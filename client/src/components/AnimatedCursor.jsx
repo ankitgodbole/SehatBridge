@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import "../styles/AnimatedCursor.css"; // Import the styles
+import React, { useEffect, useState, useRef } from 'react';
+import "../styles/AnimatedCursor.css";
 
 const AnimatedCursor = () => {
-  const [positions, setPositions] = useState([]);
-  const [isMobile, setIsMobile] = useState(false); // State to manage mobile detection
-
-  // Number of circles in the trail
+  const [isMobile, setIsMobile] = useState(false);
+  const positionsRef = useRef([]);
+  const [, forceRender] = useState(0); // Used to trigger re-renders
   const numberOfCircles = 10;
+  const frameRef = useRef(null);
 
   useEffect(() => {
-    // Function to check if the device is mobile
     const checkMobileDevice = () => {
       const userAgent = navigator.userAgent.toLowerCase();
-      setIsMobile(/android|iphone|ipad|ipod/.test(userAgent));
+      const touchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(/android|iphone|ipad|ipod/.test(userAgent) || touchDevice);
     };
 
     checkMobileDevice();
 
     const moveCursor = (e) => {
       const { clientX: x, clientY: y } = e;
-
-      // Create a new position and add it to the array of positions
-      setPositions((prev) => [{ x, y }, ...prev.slice(0, numberOfCircles - 1)]);
+      positionsRef.current = [{ x, y }, ...positionsRef.current.slice(0, numberOfCircles - 1)];
+      forceRender(p => p + 1); // Trigger re-render
     };
 
     if (!isMobile) {
@@ -30,26 +29,27 @@ const AnimatedCursor = () => {
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
-      setPositions([]);
+      positionsRef.current = [];
     };
   }, [isMobile]);
 
+  // Trail clear timeout
   useEffect(() => {
-    let timer;
-    if (!isMobile && positions.length > 0) {
-      timer = setTimeout(() => {
-        setPositions([]);
-      }, 100);
-    }
+    if (isMobile || positionsRef.current.length === 0) return;
+
+    const timer = setTimeout(() => {
+      positionsRef.current = [];
+      forceRender(p => p + 1); // Trigger re-render to remove trail
+    }, 100);
 
     return () => clearTimeout(timer);
-  }, [positions, isMobile]);
+  });
 
   if (isMobile) return null;
 
   return (
     <div className="cursor-trail">
-      {positions.map((pos, index) => (
+      {positionsRef.current.map((pos, index) => (
         <div
           key={index}
           className="cursor-circle"

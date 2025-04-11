@@ -2,9 +2,10 @@ const { hospitalSchema } = require("../../validators/hospitalSchemas.js");
 const Hospital = require("../../models/hospital.js");
 const { z } = require("zod");
 
-// Creates a new hospital
+// Create a new hospital
 const createHospital = async (req, res) => {
   try {
+    console.log(req.body);
     const parsedData = hospitalSchema.parse(req.body);
     const hospital = new Hospital(parsedData);
     await hospital.save();
@@ -19,13 +20,13 @@ const createHospital = async (req, res) => {
   }
 };
 
-// Search hospital using a search query
+// Search hospital using a query string (?q=xyz)
 const searchHospitalByQuery = async (req, res) => {
-  const searchQuery = req.query;
+  const query = req.query.q;
   try {
     let hospitals;
-    if (searchQuery) {
-      const regex = new RegExp(searchQuery, "i");
+    if (query) {
+      const regex = new RegExp(query, "i");
       hospitals = await Hospital.find({
         $or: [
           { name: { $regex: regex } },
@@ -44,18 +45,18 @@ const searchHospitalByQuery = async (req, res) => {
   }
 };
 
-// Get a hospital by ID
+// Get hospital by ID
 const getHospitalByID = async (req, res) => {
   try {
     const hospital = await Hospital.findById(req.params.id);
-    if (!hospital) return res.status(404).send();
+    if (!hospital) return res.status(404).send({ message: "Hospital not found" });
     res.send(hospital);
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
-// Update a hospital by ID
+// Update hospital by ID
 const updateHospitalByID = async (req, res) => {
   try {
     const parsedData = hospitalSchema.partial().parse(req.body);
@@ -64,7 +65,7 @@ const updateHospitalByID = async (req, res) => {
       parsedData,
       { new: true, runValidators: true }
     );
-    if (!hospital) return res.status(404).send();
+    if (!hospital) return res.status(404).send({ message: "Hospital not found" });
     res.send(hospital);
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -76,11 +77,11 @@ const updateHospitalByID = async (req, res) => {
   }
 };
 
-// Delete a hospital by ID
+// Delete hospital by ID
 const deleteHospitalByID = async (req, res) => {
   try {
     const hospital = await Hospital.findByIdAndDelete(req.params.id);
-    if (!hospital) return res.status(404).send();
+    if (!hospital) return res.status(404).send({ message: "Hospital not found" });
     res.send(hospital);
   } catch (error) {
     res.status(500).send(error);

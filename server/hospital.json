@@ -1,0 +1,18 @@
+{
+    "type": "hospital",
+    "name": "Apollo Hospital",
+    "email": "apollo@example.com",
+    "password": "Hosp@1234",
+    "phone": "8888888888",
+    "website": "https://apollohospitals.com",
+    "department": "Cardiology",
+    "availableServices": ["Ambulance", "ICU", "Blood Bank"],
+    "address": {
+  "street": "Park Street",
+  "city": "Delhi",
+  "state": "Delhi",
+  "postalCode": "110001"
+}
+
+  }
+  

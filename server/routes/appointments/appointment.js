@@ -8,13 +8,20 @@ const {
   deleteAppointmentByID,
   addEmergencyAppointment,
 } = require("../../controllers/appointments/appointmentsController.js");
+
 const router = express.Router();
 
+// Book appointment for a hospital
 router.post("/hospitals/:id/book", bookAppointmentByHospitalID);
-router.get("/appointments/:hospitalId", getAppointemntsByHospitalID);
-router.get("/appointments/:hospitalId", addAppointment);
 
-// These are protected routes and needs authentication from now on
+// ✅ Only one GET route for getting appointments
+router.get("/appointments/:hospitalId", getAppointemntsByHospitalID);
+
+// ✅ Consider changing this if addAppointment is needed
+// Example alternative: POST to manually add an appointment
+router.post("/appointments/:hospitalId/add", addAppointment);
+
+// Protected routes
 router.put(
   "/appointments/:appointmentId",
   authenticateToken,
@@ -25,14 +32,9 @@ router.patch(
   authenticateToken,
   deleteAppointmentByID
 );
-router.delete("/:id", authenticateToken);
+router.delete("/:id", authenticateToken); // Optional: define what this does
 
-/**
- * @SpecialRoute
- *
- * Emergency appointments will not need the authentication
- */
-
+// Public emergency route
 router.post("/emergency", addEmergencyAppointment);
 
 module.exports = router;

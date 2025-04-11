@@ -49,8 +49,10 @@ const registerUser = async (req, res) => {
       });
 
       await user.save();
-      res.status(201).json({ message: "User registered successfully" });
-    } else if (type === "hospital") {
+      return res.status(201).json({ message: "User registered successfully" });
+    }
+
+    if (type === "hospital") {
       const hospitalParseData = hospitalSchema.parse(req.body);
       const {
         name,
@@ -67,12 +69,10 @@ const registerUser = async (req, res) => {
         return res.status(400).json({ message: "Pincode is required" });
       }
 
-      const results = await geocodeAddress(address.postalCode + " India");
-      if (!results.length) {
-        return res.status(404).json({ message: "Location not found" });
-      }
+      // Removed location lookup / validation
+      const lat = 0.0;
+      const long = 0.0;
 
-      const { latitude: lat, longitude: long } = results[0];
       const hashedPassword = await hashPassword(password);
 
       const hospital = new Hospital({
@@ -87,14 +87,15 @@ const registerUser = async (req, res) => {
         lat,
         long,
       });
-      await hospital.save();
 
-      res
-        .status(201)
-        .json({ message: "Hospital registered successfully", hospital });
-    } else {
-      res.status(400).json({ message: "Invalid type" });
+      await hospital.save();
+      return res.status(201).json({
+        message: "Hospital registered successfully",
+        hospital,
+      });
     }
+
+    return res.status(400).json({ message: "Invalid type" });
   } catch (error) {
     console.error(error);
     if (error instanceof z.ZodError) {
@@ -102,8 +103,14 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ message: "Validation error", errors: error.errors });
     }
-    res.status(500).json({ message: "Error registering user/hospital", error });
+    return res
+      .status(500)
+      .json({ message: "Error registering user/hospital", error });
   }
+};
+
+module.exports = {
+  registerUser,
 };
 const loginUser = async (req, res) => {
   try {

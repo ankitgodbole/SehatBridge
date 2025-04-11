@@ -10,7 +10,13 @@ const options = {
 const geocoder = NodeGeocoder(options);
 
 const geocodeAddress = async (postalCode) => {
-  return geocoder.geocode(postalCode);
+  try {
+    const res = await geocoder.geocode({ postalcode: postalCode, country: "IN" });
+    return res;
+  } catch (error) {
+    console.error("Geocoding error:", error.message);
+    return [];
+  }
 };
 
 module.exports = { geocodeAddress };

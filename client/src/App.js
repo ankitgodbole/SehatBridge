@@ -15,28 +15,28 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsPreloaderVisible(false);
-    }, 5000);
+    }, 5000); // Show Preloader for 5 seconds
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-    {/*--google-site-verification: google702f0a7aa8f19d22.html--*/}
-    <div className="App">
-      {isPreloaderVisible ? (
-        <Preloader />
-      ) : (
-        <>
-          <Router>
-            <UserProvider>
-              <Layout />
-            </UserProvider>
-          </Router>
-          <ToastContainer />
-        </>
-      )}
-    </div>
+      {/*--google-site-verification: google702f0a7aa8f19d22.html--*/}
+      <div className="App">
+        {isPreloaderVisible ? (
+          <Preloader />
+        ) : (
+          <>
+            <Router>
+              <UserProvider>
+                <Layout />
+              </UserProvider>
+            </Router>
+            <ToastContainer />
+          </>
+        )}
+      </div>
     </>
   );
 }

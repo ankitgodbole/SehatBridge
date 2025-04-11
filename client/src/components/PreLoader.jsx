@@ -1,3 +1,4 @@
+// src/components/Preloader.jsx
 import "../styles/Preloader.css";
 
 const Preloader = () => {
@@ -12,7 +13,7 @@ const Preloader = () => {
           className="animate-stroke"
           style={{ fontWeight: "bold" }}
         >
-          Shivam
+          SehatBridge
         </text>
       </svg>
     </div>

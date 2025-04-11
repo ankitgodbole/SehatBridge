@@ -17,6 +17,15 @@ const getProfile = async (req, res) => {
   }
 };
 
+exports.addDoctor = (req, res) => {
+  const { name, specialty } = req.body;
+  console.log("Adding doctor:", name, specialty);
+  
+  // You can later replace this with DB logic
+  res.status(201).json({ message: `Doctor ${name} with specialty ${specialty} added.` });
+};
+
+
 const editProfileByID = async (req, res) => {
   try {
     const { id } = req.params; // Get 'id' from token

@@ -18,7 +18,7 @@ ChartJS.register(
   Title,
   CategoryScale,
   Tooltip,
-  Legend,
+  Legend
 );
 
 const StaticLineChart = () => {
@@ -57,7 +57,7 @@ const StaticLineChart = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Allows us to control the height of the chart independently of the width
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
@@ -66,15 +66,13 @@ const StaticLineChart = () => {
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (tooltipItem) => {
-            return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
-          },
+          label: (tooltipItem) =>
+            `${tooltipItem.dataset.label}: ${tooltipItem.raw}`,
         },
       },
     },
     scales: {
       x: {
-        type: 'category',
         title: {
           display: true,
           text: 'Time',
@@ -97,7 +95,6 @@ const StaticLineChart = () => {
         className="w-full"
         style={{ height: '300px', maxWidth: '100%', margin: '0 auto' }}
       >
-        {/* Ensures responsiveness by setting height and using width of the parent container */}
         <Line data={chartData} options={options} />
       </div>
     </section>
