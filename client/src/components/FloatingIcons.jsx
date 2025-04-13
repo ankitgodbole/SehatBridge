@@ -51,7 +51,7 @@ const FloatingIcons = ({
   count = 12,
   icons = [Heart, Stethoscope, Pill, Clipboard, Hospital, PhoneCall, Activity],
   colors = [
-    '#F472B6',
+    'red',
     '#60A5FA',
     '#34D399',
     '#FBBF24',

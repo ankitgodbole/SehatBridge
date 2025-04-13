@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate instead of useHistory
 
 export default function MediConnectBusinessContactForm() {
   const [step, setStep] = useState(1);
@@ -6,6 +7,8 @@ export default function MediConnectBusinessContactForm() {
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // Success message state
+  const navigate = useNavigate(); // For redirection
 
   const handleContinue = (e) => {
     e.preventDefault();
@@ -18,26 +21,61 @@ export default function MediConnectBusinessContactForm() {
     setStep(2);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-
+  
     if (!form.company.value || !form.jobTitle.value || !form.organizationType.value || !form.consent.checked) {
       alert("Please complete all required fields.");
       return;
     }
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    console.log("Submitted Data:", data);
-    // Submit data to backend here
+  
+    const formData = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      company: form.company.value,
+      jobTitle: form.jobTitle.value,
+      organizationType: form.organizationType.value,
+      solutions: Array.from(form.querySelectorAll('input[name="solutions"]:checked')).map(el => el.value),
+      message: form.message.value,
+      consent: form.consent.checked
+    };
+  
+    try {
+      const response = await fetch("http://localhost:8080/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        setSuccessMessage("Form submitted successfully!"); // Show success message
+        setTimeout(() => {
+          navigate('/'); // Redirect to the homepage after 3 seconds
+        }, 3000); // Delay to allow the success message to be visible
+      } else {
+        alert("Submission failed: " + result.error);
+      }
+    } catch (error) {
+      alert("An error occurred while submitting the form.");
+    }
   };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-8 max-w-2xl mx-auto mb-5 mt-36">
       <h2 className="text-2xl font-bold mb-2 text-gray-800">Contact Medi-Connect for Business</h2>
       <p className="text-gray-600 mb-6">Interested in our healthcare management solutions? Let's connect!</p>
+
+      {successMessage && (
+        <div className="bg-green-100 text-green-700 p-3 mb-4 rounded-md">
+          {successMessage} {/* Display success message */}
+        </div>
+      )}
 
       <form className="space-y-6" onSubmit={step === 2 ? handleSubmit : undefined}>
         {step === 1 ? (
