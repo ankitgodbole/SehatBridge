@@ -99,7 +99,7 @@ const Footer = () => {
   const socialMedia = [
     {
       Icon: FaGithub,
-      link: 'https://github.com/Luson045/medi-connect',
+      link: 'https://github.com/shivuu2005/SehatBridge',
       color: '#333',
     },
     { Icon: FaDiscord, link: 'https://discord.gg', color: '#7289DA' },
@@ -322,7 +322,7 @@ const Footer = () => {
             informational purposes only and should not be considered as medical
             advice, diagnosis, or treatment. Always seek the advice of a
             qualified healthcare provider for any medical condition or
-            treatment. Med-Space facilitates OPD appointment booking and
+            treatment. SehatBridge facilitates OPD appointment booking and
             hospital data sharing, but it does not endorse or guarantee the
             quality of services provided by healthcare providers.”
           </p>
