@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user");
+const cors = require('cors');
 const helmet = require("helmet");
 const session = require("express-session");
 const passport = require("passport");
