@@ -5,8 +5,7 @@ function corsConfig(app) {
     "https://learnstocks.netlify.app",
     "https://console.cron-job.org",
     "https://prodez-ai.netlify.app",
-    "https://medi-connect-in.netlify.app",
-    "https://med-space.vercel.app",
+    "https://sehat-bridge.vercel.app",
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:8080", // Add localhost:8080 as it may be used in dev

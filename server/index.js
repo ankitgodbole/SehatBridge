@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user");
-const cors = require('cors');
 const helmet = require("helmet");
 const session = require("express-session");
 const passport = require("passport");
@@ -17,7 +16,6 @@ const client = require("prom-client");
 const { connectDB, corsConfig } = require("./utils");
 const Hospital = require("./models/hospital");
 const { createUserFromGoogleSignIn } = require("./controllers/auth/authController");
-const corsOptions = require('./corsConfig');
 require("dotenv").config();
 
 // JWT Secret Key
@@ -35,9 +33,6 @@ collectDefaultMetrics({ register: client.register });
 // App Init
 const app = express();
 const port = process.env.PORT || 8081;
-
-
-app.use(cors(corsOptions));
 
 // Middleware
 corsConfig(app);
