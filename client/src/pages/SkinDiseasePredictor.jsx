@@ -68,10 +68,15 @@ const SkinDiseasePredictor = () => {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    try {
-      const response = await axios.post("http://localhost:5000/predict-skin", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+    // try {
+    //   const response = await axios.post("http://localhost:5000/predict-skin", formData, {
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   });
+
+      try {
+        const response = await axios.post("https://sehatbridge.onrender.com/predict-skin", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
 
       const { predicted_class, prediction } = response.data;
       const predictedInfo = diseaseInfo[predicted_class];
