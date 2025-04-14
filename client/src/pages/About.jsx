@@ -8,38 +8,40 @@ import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
 import { useRecoilValue } from 'recoil'; // Import Recoil
 import { mode } from '../store/atom'; // Import the mode atom
-import luson from '../assets/images/luson.jpg';
+import shivam from '../assets/images/shivam.jpg';
+import kunal from '../assets/images/kunal.jpg';
+
 
 // Team member data
 const teamMembers = [
   {
     id: 1,
-    name: 'Luson Basumatary',
-    role: 'Lead Developer || Founder',
+    name: 'Shivam Malviya',
+    role: 'Full Stack Developer',
     description:
-      'Luson Basumatary brings a wealth of experience in software development and a passion for innovation. He leads the team in creating a robust and user-friendly platform.',
-    imageUrl: luson,
+      'Shivam brings a wealth of experience in software development and a passion for innovation. He leads the team in creating a robust and user-friendly platform.',
+    imageUrl: shivam,
     linkedin: 'https://www.linkedin.com/in/luson-basumatary-79a93b244/',
     github: 'https://github.com/Luson045',
     email: 'mailto:luson@example.com',
   },
   {
     id: 2,
-    name: 'Rohit Bansal',
+    name: 'Kunal Nagwanshi',
     role: 'Frontend Developer',
     description:
-      'Rohit specializes in crafting intuitive user interfaces, translating complex requirements into accessible designs.',
-    imageUrl: 'https://via.placeholder.com/150',
+      'Kunal specializes in crafting intuitive user interfaces, translating complex requirements into accessible designs.',
+    imageUrl: kunal,
     linkedin: 'https://www.linkedin.com/in/luson-basumatary',
     github: 'https://github.com/luson045',
     email: 'mailto:luson@example.com',
   },
   {
     id: 3,
-    name: 'Kalpesh Jain',
-    role: 'UI/UX Designer',
+    name: 'Anshika Tomar',
+    role: 'Frontend Developer',
     description:
-      'Kalpesh is focused on making our platform user-friendly and engaging, ensuring seamless interactions.',
+      'Anshika is focused on making our platform user-friendly and engaging, ensuring seamless interactions.',
     imageUrl: 'https://via.placeholder.com/150',
     linkedin: 'https://www.linkedin.com/in/luson-basumatary',
     github: 'https://github.com/luson045',
@@ -47,8 +49,8 @@ const teamMembers = [
   },
   {
     id: 4,
-    name: 'Simranpreet Kaur',
-    role: 'Graphic Designer',
+    name: 'Shital Gokhe',
+    role: 'Machine Learning',
     description:
       'Simranpreet creates compelling graphics and visual elements that enhance the user experience.',
     imageUrl: 'https://via.placeholder.com/150',
@@ -58,10 +60,10 @@ const teamMembers = [
   },
   {
     id: 5,
-    name: 'Kartik Kaushal',
+    name: 'Akshat Tambe',
     role: 'Healthcare Researcher',
     description:
-      'Kartik ensures that our platform meets high standards by staying updated with the latest trends in healthcare.',
+      'Akshat ensures that our platform meets high standards by staying updated with the latest trends in healthcare.',
     imageUrl: 'https://via.placeholder.com/150',
     linkedin: 'https://www.linkedin.com/in/luson-basumatary',
     github: 'https://github.com/luson045',
@@ -69,10 +71,11 @@ const teamMembers = [
   },
   {
     id: 6,
-    name: 'Shubham',
-    role: 'Technology Researcher',
+    name: '-----',
+    role: '-----',
     description:
-      'Shubham explores emerging technologies to integrate cutting-edge features into our platform.',
+      '',
+      // Shubham explores emerging technologies to integrate cutting-edge features into our platform.
     imageUrl: 'https://via.placeholder.com/150',
     linkedin: 'https://www.linkedin.com/in/luson-basumatary',
     github: 'https://github.com/luson045',
@@ -124,7 +127,7 @@ const AboutPage = () => {
               Our Vision
             </VisionTitle>
             <VisionText dark={dark} className="font-sans ">
-              At Med-Space, we envision a world where accessing outpatient care
+              At SehatBridge, we envision a world where accessing outpatient care
               is as simple as a few clicks. By leveraging technology and
               innovation, we aim to provide a platform that bridges the gap
               between patients and healthcare providers, making high-quality
@@ -143,7 +146,7 @@ const AboutPage = () => {
               healthcare providers alike. We are committed to building
               technology that simplifies healthcare processes, improves access,
               and enhances patient experience. With a focus on continuous
-              innovation, we work to ensure that the Medi-Connect platform
+              innovation, we work to ensure that the SehatBridge platform
               evolves to meet the changing needs of the healthcare industry.
             </MissionText>
           </Box>
@@ -429,7 +432,7 @@ const AboutPage = () => {
             Nearby Hospitals
           </StatItem>
         </StatsSection>
-        <GitTeamTitle dark={dark}>
+        {/* <GitTeamTitle dark={dark}>
           Our Amazing Open Source Contributors
         </GitTeamTitle>
         <div style={{ textAlign: 'center' }}>
@@ -439,7 +442,7 @@ const AboutPage = () => {
               src="https://contrib.rocks/image?repo=Luson045/medi-connect&&max=1000"
             />
           </a>
-        </div>
+        </div> */}
 
         <JoinUsSection dark={dark}>
           <JoinUsTitle dark={dark}>Join Us on Our Journey</JoinUsTitle>
