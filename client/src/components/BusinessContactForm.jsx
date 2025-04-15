@@ -68,7 +68,7 @@ export default function MediConnectBusinessContactForm() {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-8 max-w-2xl mx-auto mb-5 mt-36">
-      <h2 className="text-2xl font-bold mb-2 text-gray-800">Contact Medi-Connect for Business</h2>
+      <h2 className="text-2xl font-bold mb-2 text-gray-800">Contact SehatBridge for Business</h2>
       <p className="text-gray-600 mb-6">Interested in our healthcare management solutions? Let's connect!</p>
 
       {successMessage && (
@@ -182,7 +182,7 @@ export default function MediConnectBusinessContactForm() {
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor="consent" className="ml-2 block text-sm text-gray-900">
-                I agree to be contacted about Medi-Connect solutions
+                I agree to be contacted about SehatBridge solutions
               </label>
             </div>
 

@@ -3,12 +3,12 @@ let BASE_URL;
 if (window.location.hostname === 'localhost') {
   BASE_URL = 'http://localhost:8080';
 } else {
-  BASE_URL = 'https://medi-connect-f671.onrender.com';
+  BASE_URL = 'https://sehatbridge.onrender.com';
 }
 
 const adjustUrl = (url) => {
   if (window.location.hostname !== 'localhost' && url.includes('localhost:8080')) {
-    return url.replace('localhost:8080', 'https://medi-connect-f671.onrender.com');
+    return url.replace('localhost:8080', 'https://sehatbridge.onrender.com');
   }
   return url;
 };
