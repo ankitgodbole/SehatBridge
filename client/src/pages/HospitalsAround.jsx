@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
 import { FaMapPin, FaHospital } from 'react-icons/fa'; // Import the icons
 import ReactDOMServer from 'react-dom/server'; // Import ReactDOMServer to render icons to HTML
 import { useRecoilState } from 'recoil';
@@ -21,31 +20,35 @@ const HospitalsAround = () => {
   const [distances, setDistances] = useState({}); // Store distances for each hospital
   const [address, setAddress] = useState('Fetching address...'); // State for the human-readable address
   const [locationError, setLocationError] = useState(false);
+
   useEffect(() => {
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 0,
+    // Function to get the user's location
+    const getLocation = () => {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      };
+
+      const successCallback = (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        setLocation({ lat: latitude, lng: longitude });
+        findHospitalsNearby(latitude, longitude);
+        fetchAddress(latitude, longitude); // Fetch human-readable address
+      };
+
+      const errorCallback = (error) => {
+        console.error('Error getting location: ', error);
+        setLocationError(true);
+      };
+
+      // Get current location
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
     };
 
-    const successCallback = (position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      setLocation({ lat: latitude, lng: longitude });
-      findHospitalsNearby(latitude, longitude);
-      fetchAddress(latitude, longitude); // Fetch human-readable address
-    };
+    getLocation(); // Call the function to get location
 
-    const errorCallback = (error) => {
-      console.error('Error getting location: ', error);
-      setLocationError(true);
-    };
-
-    navigator.geolocation.getCurrentPosition(
-      successCallback,
-      errorCallback,
-      options,
-    );
   }, []);
 
   // Fetch human-readable address using reverse geocoding (Nominatim API)
@@ -205,15 +208,11 @@ const HospitalsAround = () => {
     <>
       <Navbar />
       <div className="content-container">
-        {' '}
-        {/* Add this wrapper for margin */}
         {location.lat && location.lng ? (
-          <div className="flex flex-col-reverse  py-16  md:flex-row ">
+          <div className="flex flex-col-reverse py-16 md:flex-row ">
             <div
               className={`h-1/2 md:w-[30%] md:h-screen  md:overflow-y-scroll ${
-                dark === 'dark'
-                  ? 'bg-gray-900 text-gray-200'
-                  : 'bg-white text-gray-800'
+                dark === 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-white text-gray-800'
               }`}
             >
               <div
@@ -244,42 +243,29 @@ const HospitalsAround = () => {
                         return (
                           <div
                             key={index}
-                            className={`mx-auto w-full  rounded-xl shadow-2xl  p-4 mb-3
-                               ${
-                                 dark === 'dark'
-                                   ? 'bg-[#2d3748] text-[#e2e8f0]'
-                                   : 'bg-[#fff] text-[#333]'
-                               }`}
+                            className={`mx-auto w-full rounded-xl shadow-2xl p-4 mb-3 ${
+                              dark === 'dark' ? 'bg-[#2d3748] text-[#e2e8f0]' : 'bg-[#fff] text-[#333]'
+                            }`}
                           >
                             <div className="uppercase tracking-wide text-[10px] text-custom-blue font-semibold ">
                               Hospital
                             </div>
                             <h1
-                              className={`block mt-1 text-lg leading-tight font-semibold  ${
-                                dark === 'dark'
-                                  ? 'text-[#f6e05e]'
-                                  : 'text-[#c229b8]'
+                              className={`block mt-1 text-lg leading-tight font-semibold ${
+                                dark === 'dark' ? 'text-[#f6e05e]' : 'text-[#c229b8]'
                               }`}
                             >
                               {hospital.name}
                             </h1>
-                            {/* <div className="mt-2 text-sm">
-                          <span className="text-gray-700 font-semibold">Address:</span>
-                          <p className='text-xs'>{hospital.address}</p>
-                        </div> */}
                             <div className="mt-2 text-sm">
-                              <span className="font-semibold">
-                                Coordinates:
-                              </span>
+                              <span className="font-semibold">Coordinates:</span>
                               <p className="text-xs">
                                 Lat: {hospital.lat}, Lon: {hospital.lng}
                               </p>
                             </div>
                             <div className="mt-2 text-sm">
                               <span className=" font-semibold">Distance:</span>
-                              <p className="text-xs">
-                                {distances[hospital.name]} km
-                              </p>
+                              <p className="text-xs">{distances[hospital.name]} km</p>
                             </div>
                             <button
                               onClick={() => showRouteToHospital(hospital)}
@@ -297,28 +283,12 @@ const HospitalsAround = () => {
                 )}
               </div>
             </div>
-            <div
-              id="map"
-              className="h-[50vh] w-full  md:w-[70%] md:h-screen "
-            ></div>
+            <div className="w-full h-screen" id="map"></div>
           </div>
         ) : locationError ? (
-          <p>
-            Having trouble fetching location. Please enable location access in
-            your browser and reload the page to retry.
-          </p>
+          <div className="error-message">Unable to fetch location. Please enable location services.</div>
         ) : (
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'center',
-              gap: '3rem',
-            }}
-          >
-            <Skeleton variant="rectangular" width={400} height={400} />
-            <Skeleton variant="rectangular" width={900} height={760} />
-          </div>
+          <Skeleton variant="rectangular" width="100%" height="100%" />
         )}
       </div>
     </>

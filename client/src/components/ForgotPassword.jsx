@@ -23,7 +23,7 @@ const ForgotPassword = () => {
   };
   const sendOtp = async () => {
     try {
-      const response = await fetch('http://localhost:8080/auth/forgot-password', {
+      const response = await fetch('https://sehatbridge.onrender.com/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const ForgotPassword = () => {
 
   const verifyOtp = async () => {
     try {
-      const response = await fetch('http://localhost:8080/auth/otpverify', {
+      const response = await fetch('https://sehatbridge.onrender.com/auth/otpverify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/auth/reset-password', {
+      const response = await fetch('https://sehatbridge.onrender.com/auth/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

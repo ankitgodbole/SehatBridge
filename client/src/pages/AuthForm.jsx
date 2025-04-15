@@ -117,14 +117,14 @@ const AuthPage = () => {
   const handleGoogleSignIn = () => {
     // Open a new window for Google OAuth sign-in
     const googleSignInWindow = window.open(
-      'https://medi-connect-f671.onrender.com/auth/google',
+      'https://sehatbridge.onrender.com/auth/google',
       '_blank',
       'width=500,height=600'
     );
   
     // Listen for messages from the OAuth window (token response)
     window.addEventListener('message', (event) => {
-      if (event.origin === 'https://medi-connect-f671.onrender.com') { // Ensure the event is from the correct origin
+      if (event.origin === 'https://sehatbridge.onrender.com') { // Ensure the event is from the correct origin
         const { token } = event.data;
         if (token) {
           localStorage.setItem('token', token); // Store the token in localStorage

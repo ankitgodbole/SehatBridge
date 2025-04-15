@@ -53,7 +53,7 @@ const Footer = () => {
 
   const handleSubscribe = async () => {
     try {
-      const response = await fetch('http://localhost:8080/otherroutes/subscribe', {
+      const response = await fetch('https://sehatbridge.onrender.com/otherroutes/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

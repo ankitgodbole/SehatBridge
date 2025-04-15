@@ -232,7 +232,7 @@ const forgotPassword = async (req, res) => {
     const mailOptions = {
       from: `"Med-Space" <${process.env.SMTP_EMAIL}>`,
       to: email,
-      subject: "Password Reset OTP for Med-Space",
+      subject: "Password Reset OTP for SehatBridge",
       text: `Your OTP for password reset is: ${otp}. It will expire in 10 minutes.`,
     };
 
