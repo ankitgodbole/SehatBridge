@@ -10,7 +10,9 @@ import { useRecoilValue } from 'recoil'; // Import Recoil
 import { mode } from '../store/atom'; // Import the mode atom
 import shivam from '../assets/images/shivam.jpg';
 import kunal from '../assets/images/kunal.jpg';
-
+import anshika from '../assets/images/anshika.jpg';
+import shital from '../assets/images/shital.jpg';
+import akshat from '../assets/images/akshat.jpg';
 
 // Team member data
 const teamMembers = [
@@ -21,66 +23,66 @@ const teamMembers = [
     description:
       'Shivam brings a wealth of experience in software development and a passion for innovation. He leads the team in creating a robust and user-friendly platform.',
     imageUrl: shivam,
-    linkedin: 'https://www.linkedin.com/in/luson-basumatary-79a93b244/',
-    github: 'https://github.com/Luson045',
-    email: 'mailto:luson@example.com',
+    linkedin: 'https://www.linkedin.com/in/shivam-malviya-499070303/',
+    github: 'https://github.com/shivuu2005',
+    email: 'mailto:malviyashivam238@gmail.com',
   },
   {
     id: 2,
+    name: 'Shital Gokhe',
+    role: 'Machine Learning',
+    description:
+      'Simranpreet creates compelling graphics and visual elements that enhance the user experience.',
+    imageUrl: shital,
+    linkedin: 'https://www.linkedin.com/in/shital-gokhe-6032a2304/',
+    github: 'https://github.com/shital2005421',
+    email: 'mailto:shitalgokhe@gmail.com',
+  },
+  {
+    id: 3,
+    name: 'Akshat Tambe',
+    role: 'Healthcare Researcher',
+    description:
+      'Akshat ensures that our platform meets high standards by staying updated with the latest trends in healthcare.',
+    imageUrl: akshat,
+    linkedin: 'https://www.linkedin.com/in/akshat-tambe-2b65a9259/',
+    github: 'https://github.com/tambeakshat',
+    email: 'mailto:shitalgokhe@gmail.com',
+  },
+  {
+    id: 4,
     name: 'Kunal Nagwanshi',
     role: 'Frontend Developer',
     description:
       'Kunal specializes in crafting intuitive user interfaces, translating complex requirements into accessible designs.',
     imageUrl: kunal,
-    linkedin: 'https://www.linkedin.com/in/luson-basumatary',
-    github: 'https://github.com/luson045',
-    email: 'mailto:luson@example.com',
+    linkedin: 'https://www.linkedin.com/in/kunalnagwanshi/',
+    github: 'https://github.com/Kunalnag1c',
+    email: 'mailto:kunalnagwanshi94@gmail.com',
   },
   {
-    id: 3,
+    id: 5,
     name: 'Anshika Tomar',
     role: 'Frontend Developer',
     description:
       'Anshika is focused on making our platform user-friendly and engaging, ensuring seamless interactions.',
-    imageUrl: 'https://via.placeholder.com/150',
-    linkedin: 'https://www.linkedin.com/in/luson-basumatary',
-    github: 'https://github.com/luson045',
-    email: 'mailto:luson@example.com',
+    imageUrl: anshika,
+    linkedin: 'https://www.linkedin.com/in/anshikatomar5588/',
+    github: 'https://github.com/anshika15tomar',
+    email: 'mailto:anshikatomar5588@gmail.com',
   },
-  {
-    id: 4,
-    name: 'Shital Gokhe',
-    role: 'Machine Learning',
-    description:
-      'Simranpreet creates compelling graphics and visual elements that enhance the user experience.',
-    imageUrl: 'https://via.placeholder.com/150',
-    linkedin: 'https://www.linkedin.com/in/luson-basumatary',
-    github: 'https://github.com/luson045',
-    email: 'mailto:luson@example.com',
-  },
-  {
-    id: 5,
-    name: 'Akshat Tambe',
-    role: 'Healthcare Researcher',
-    description:
-      'Akshat ensures that our platform meets high standards by staying updated with the latest trends in healthcare.',
-    imageUrl: 'https://via.placeholder.com/150',
-    linkedin: 'https://www.linkedin.com/in/luson-basumatary',
-    github: 'https://github.com/luson045',
-    email: 'mailto:luson@example.com',
-  },
-  {
-    id: 6,
-    name: '-----',
-    role: '-----',
-    description:
-      '',
-      // Shubham explores emerging technologies to integrate cutting-edge features into our platform.
-    imageUrl: 'https://via.placeholder.com/150',
-    linkedin: 'https://www.linkedin.com/in/luson-basumatary',
-    github: 'https://github.com/luson045',
-    email: 'mailto:luson@example.com',
-  },
+  // {
+  //   id: 6,
+  //   name: '-----',
+  //   role: '-----',
+  //   description:
+  //     '',
+  //     // Shubham explores emerging technologies to integrate cutting-edge features into our platform.
+  //   imageUrl: 'https://via.placeholder.com/150',
+  //   linkedin: 'https://www.linkedin.com/in/luson-basumatary',
+  //   github: 'https://github.com/luson045',
+  //   email: 'mailto:luson@example.com',
+  // },
 ];
 
 const AboutPage = () => {
@@ -114,11 +116,14 @@ const AboutPage = () => {
 
   const dark = useRecoilValue(mode); // Get dark mode value from Recoil
   return (
-    <Container className={`${
-      dark === 'dark'
-        ? 'relative text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gray-700 via-gray-900 to-black overflow-hidden'
-        : 'relative text-black py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-100 to-white overflow-hidden'
-    } `}  dark={dark}>
+    <Container
+      className={`${
+        dark === 'dark'
+          ? 'relative text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gray-700 via-gray-900 to-black overflow-hidden'
+          : 'relative text-black py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-100 to-white overflow-hidden'
+      } `}
+      dark={dark}
+    >
       <animated.div style={fadeIn}>
         {/* Two-box section for Vision and Mission */}
         <VisionMissionContainer>
@@ -127,8 +132,8 @@ const AboutPage = () => {
               Our Vision
             </VisionTitle>
             <VisionText dark={dark} className="font-sans ">
-              At SehatBridge, we envision a world where accessing outpatient care
-              is as simple as a few clicks. By leveraging technology and
+              At SehatBridge, we envision a world where accessing outpatient
+              care is as simple as a few clicks. By leveraging technology and
               innovation, we aim to provide a platform that bridges the gap
               between patients and healthcare providers, making high-quality
               care accessible to everyone, anywhere. We strive to ensure that
@@ -580,12 +585,12 @@ const Description = styled.p`
 `;
 
 // Community Section
-const GitTeamTitle = styled.h3`
-  font-size: 2.5rem;
-  color: ${({ dark }) => (dark === 'dark' ? '#f6e05e' : '#c229b8')};
-  text-align: center;
-  margin-top: 2rem;
-`;
+// const GitTeamTitle = styled.h3`
+//   font-size: 2.5rem;
+//   color: ${({ dark }) => (dark === 'dark' ? '#f6e05e' : '#c229b8')};
+//   text-align: center;
+//   margin-top: 2rem;
+// `;
 
 // Join Us Section
 const JoinUsSection = styled.div`
