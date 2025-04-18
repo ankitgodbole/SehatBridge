@@ -71,7 +71,7 @@ const SkinDiseasePredictor = () => {
     formData.append("file", selectedFile);
 
     try {
-      const response = await axios.post("https://sehatbridge.onrender.com/predict-skin", formData, {
+      const response = await axios.post("http://localhost:5000/predict-skin", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -110,7 +110,7 @@ const SkinDiseasePredictor = () => {
       <p style={styles.subtitle}>
         Upload an image and our AI model will predict the disease with high accuracy and provide medical advice.
       </p>
-
+  
       <div style={styles.uploadSection}>
         <input type="file" accept="image/*" onChange={handleFileChange} />
         <button onClick={handlePredict} disabled={loading} style={styles.button}>
@@ -118,39 +118,38 @@ const SkinDiseasePredictor = () => {
         </button>
         {error && <p style={styles.error}>{error}</p>}
       </div>
-
-      {selectedFile && (
-        <div style={styles.previewContainer}>
-          <h3>Uploaded Image Preview:</h3>
-          <img
-            src={URL.createObjectURL(selectedFile)}
-            alt="Skin Condition"
-            style={styles.image}
-          />
+  
+      {selectedFile && result && (
+        <div style={styles.resultWrapper}>
+          <div style={styles.previewCard}>
+            <h3 style={styles.sectionTitle}>Uploaded Image</h3>
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="Skin Condition"
+              style={styles.image}
+            />
+          </div>
+  
+          <div style={styles.resultCard}>
+            <h2 style={styles.predictedTitle}>{`🩺 ${result.name}`}</h2>
+            <p><strong>🔢 Probability:</strong> <span style={styles.highlight}>{result.probability}%</span></p>
+            <p><strong>📖 Description:</strong> {result.description}</p>
+            <p><strong>💊 Treatment:</strong> {result.treatment}</p>
+            <p><strong>🧴 Medicines:</strong> {result.medicine}</p>
+            <p><strong>⚠️ Precautions:</strong> {result.precautions}</p>
+          </div>
         </div>
       )}
-
-      {result && (
-        <div style={styles.resultBox}>
-          <h2>{`Predicted: ${result.name}`}</h2>
-          <p><strong>Probability:</strong> {result.probability}%</p>
-          <p><strong>Description:</strong> {result.description}</p>
-          <p><strong>Treatment:</strong> {result.treatment}</p>
-          <p><strong>Medicines:</strong> {result.medicine}</p>
-          <p><strong>Precautions:</strong> {result.precautions}</p>
-        </div>
-      )}
-
-      <div style={styles.animationSection}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" style={styles.animationSVG}>
+  
+      {/* <div style={styles.animationSection}>
+        <svg xmlns="" width="100" height="100" viewBox="0 0 100 100" style={styles.animationSVG}>
           <circle cx="50" cy="50" r="40" stroke="#3498db" strokeWidth="4" fill="none" />
           <circle cx="50" cy="50" r="35" stroke="#9b59b6" strokeWidth="4" fill="none" strokeDasharray="10,5" strokeDashoffset="0" />
         </svg>
-      </div>
+      </div> */}
     </div>
   );
-};
-
+};  
 // Styles for the component
 const styles = {
   container: {
@@ -163,6 +162,69 @@ const styles = {
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
     position: "relative",
   },
+
+  resultWrapper: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    gap: "30px",
+    marginTop: "40px",
+  },
+  
+  previewCard: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+    padding: "20px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    textAlign: "center",
+    minWidth: "320px",
+  },
+  
+  resultCard: {
+    flex: 1.2,
+    backgroundColor: "#fefefe",
+    padding: "25px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.15)",
+    minWidth: "320px",
+    borderLeft: "6px solid #3498db",
+  },
+  
+  predictedTitle: {
+    color: "#e74c3c",
+    fontSize: "24px",
+    marginBottom: "15px",
+    fontWeight: "600",
+  },
+  
+  sectionTitle: {
+    fontSize: "20px",
+    marginBottom: "15px",
+    fontWeight: "500",
+    color: "#2c3e50",
+  },
+  
+  highlight: {
+    color: "#2ecc71",
+    fontWeight: "600",
+  },
+  
+  resultBox: {
+    flex: "1",
+    backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "12px",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+    minWidth: "300px",
+  },
+  previewContainer: {
+    flex: "1",
+    textAlign: "center",
+    minWidth: "300px",
+  },
+  
 
   title: {
     textAlign: "center",
@@ -191,24 +253,14 @@ const styles = {
     fontSize: "16px",
     marginTop: "15px",
   },
-  previewContainer: {
-    textAlign: "center",
-    marginTop: "20px",
-  },
+
   image: {
     width: "350px",
     borderRadius: "10px",
     marginTop: "15px",
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
   },
-  resultBox: {
-    backgroundColor: "#f4f4f4",
-    padding: "25px",
-    borderRadius: "12px",
-    marginTop: "30px",
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-  },
-  error: {
+   error: {
     color: "red",
     marginTop: "15px",
     fontSize: "14px",

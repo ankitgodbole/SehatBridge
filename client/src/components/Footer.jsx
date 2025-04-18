@@ -83,7 +83,7 @@ const Footer = () => {
 
   // Define company links with distinct paths
   const aboutLinks = [
-    { name: 'Our Hospital', path: '/our-hospital' },
+    { name: 'Our Hospital', path: '/hospitals' },
     { name: 'Doctors', path: '/doctors' },
     { name: 'Pricing', path: '/pricing' },
   ];

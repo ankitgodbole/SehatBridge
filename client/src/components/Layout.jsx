@@ -27,6 +27,7 @@ import PrivateRoute from '../privateroute/privateroute';
 import Success from '../pages/Success';
 import Newsletters from '../pages/Newsletters';
 import PredictSkin from '../pages/SkinDiseasePredictor';
+import DiseasePredictor from './DiseasePredictor'; // ✅ NEW IMPORT
 
 function Layout() {
   const location = useLocation();
@@ -50,7 +51,8 @@ function Layout() {
     '/business',
     '/forgot-password',
     '/newsletter-dashboard',
-    '/predict-skin' // ✅ Added new route here
+    '/predict-skin',
+    '/predict-disease' // ✅ ADDED ROUTE FOR DISEASE PREDICTION
   ];
 
   const showNavAndFooter = showNavAndFooterRoutes.includes(location.pathname);
@@ -80,7 +82,8 @@ function Layout() {
           <Route path="/business" element={<BusinessContactForm />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/newsletter-dashboard" element={<Newsletters />} />
-          <Route path="/predict-skin" element={<PredictSkin />} /> {/* ✅ Added Route */}
+          <Route path="/predict-skin" element={<PredictSkin />} />
+          <Route path="/predict-disease" element={<DiseasePredictor />} /> {/* ✅ NEW ROUTE */}
 
           {/* Protected Routes */}
           <Route element={<PrivateRoute />}>

@@ -1,4 +1,7 @@
 const express = require("express");
+const bodyParser = require('body-parser');
+const { PythonShell } = require('python-shell');
+
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const helmet = require("helmet");
@@ -34,6 +37,10 @@ collectDefaultMetrics({ register: client.register });
 const app = express();
 const port = process.env.PORT || 8081;
 
+
+app.use(bodyParser.json());
+
+
 // Middleware
 corsConfig(app);
 app.use(express.static("public"));
@@ -67,6 +74,36 @@ passport.use(
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
+
+app.post('/predict-disease', (req, res) => {
+  const { name, symptoms } = req.body;
+  
+  console.log('Received name:', name);
+  console.log('Received symptoms:', symptoms);
+  
+  let options = {
+    args: [JSON.stringify(symptoms)]  // Pass symptoms as a valid JSON array string
+};
+
+  PythonShell.run('predict.py', options, (err, result) => {
+    if (err) {
+      console.error('Error running Python script:', err);
+      res.status(500).send({ error: 'Prediction failed' });
+      return;
+    }
+
+    console.log('Prediction result:', result);
+
+    // Assuming result is in the format { disease, description, precautions }
+    const prediction = JSON.parse(result[0]);
+    res.json({
+      name,
+      disease: prediction.disease,
+      description: prediction.description,
+      precautions: prediction.precautions
+    });
+  });
+});
 
 // Google Auth Routes
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));

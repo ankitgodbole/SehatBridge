@@ -1,12 +1,10 @@
-import { BrowserRouter as Router } from 'react-router-dom'; // Import Routes instead of Switch
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './store/userContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout';
 import { useState, useEffect } from 'react';
 import Preloader from './components/PreLoader';
-
-
 function App() {
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(true);
 
@@ -14,7 +12,6 @@ function App() {
     const timer = setTimeout(() => {
       setIsPreloaderVisible(false);
     }, 5000);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -26,7 +23,7 @@ function App() {
         <Router>
           <UserProvider>
             <Layout />
-            
+
           </UserProvider>
           <ToastContainer />
         </Router>

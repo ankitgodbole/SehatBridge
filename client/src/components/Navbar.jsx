@@ -146,6 +146,14 @@ const Navbar = () => {
             <p className="font-bold text-lg hover:brightness-50">Skin Disease</p>
           </NavLink>
 
+          <NavLink
+            to="/predict-disease"
+            className="flex justify-center items-center gap-2"
+          >
+            <MdHealing />
+            <p className="font-bold text-lg hover:brightness-50">Health Checkup</p>
+          </NavLink>
+
 
           {/* Show Lab Tests and Hospitals Around for regular user */}
           {isAuthenticated && user?.role === 'user' && (
@@ -271,6 +279,13 @@ const Navbar = () => {
       >
         <MdHealing />
         <p className="font-bold text-lg hover:brightness-50">Skin Disease</p>
+      </NavLink>
+      <NavLink
+        to="/predict-disease"
+        className="flex justify-center items-center gap-2"
+      >
+        <MdHealing />
+        <p className="font-bold text-lg hover:brightness-50">Health Checkup</p>
       </NavLink>
 
           {/* Conditional Links */}
