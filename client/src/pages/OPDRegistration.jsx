@@ -256,7 +256,7 @@ function OPDRegistrationForm() {
     doc.setFontSize(14);
     doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
     doc.setFontSize(10);
-    doc.text('Generated from Med-Space', 105, 36, { align: 'center' });
+    doc.text('Generated from SehatBridge', 105, 36, { align: 'center' });
   
     // Body
     doc.setTextColor(44, 62, 80);
@@ -560,7 +560,7 @@ function OPDRegistrationForm() {
           <div className="modal-content">
             <div className="OpdHeader">
               <img src="/favicon.png" className="image" alt="Logo" />
-              <p className="OPDText">Med-Space</p>
+              <p className="OPDText">SehatBridge</p>
             </div>
             <hr></hr>
 
@@ -624,7 +624,7 @@ function OPDRegistrationForm() {
               }}
             >
               <hr />
-              <p>&copy; 2024 Med-Space. All rights reserved. &trade;</p>
+              <p>&copy; 2025 SehatBridge. All rights reserved. &trade;</p>
             </footer>
           </div>
         </div>

@@ -53,7 +53,7 @@ const Footer = () => {
 
   const handleSubscribe = async () => {
     try {
-      const response = await fetch('https://sehatbridge.onrender.com/otherroutes/subscribe', {
+      const response = await fetch('http://localhost:8080/otherroutes/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,14 +85,14 @@ const Footer = () => {
   const aboutLinks = [
     { name: 'Our Hospital', path: '/hospitals' },
     { name: 'Doctors', path: '/doctors' },
-    { name: 'Pricing', path: '/pricing' },
+    // { name: 'Pricing', path: '/pricing' },
   ];
 
   // Define quick links
   const servicesLinks = [
     { name: 'OPD Consultations', path: '/registerOPD' },
     { name: 'Lab Tests', path: '/labtest' },
-    { name: 'Health Checkup', path: '/health-checkup' },
+    { name: 'Health Checkup', path: '/predict-disease' },
   ];
 
   // Define social media links
@@ -110,7 +110,7 @@ const Footer = () => {
   // Define legal links with their paths if available
   const contactUsLinks = [
     { name: 'Business', path: '/business' },
-    { name: 'Support Us', path: '/support-us' },
+    // { name: 'Support Us', path: '/support-us' },
     { name: 'Customer Care', path: '/customer-care' },
     { name: 'Newsletter', path: '/newsletter-dashboard' },
   ];

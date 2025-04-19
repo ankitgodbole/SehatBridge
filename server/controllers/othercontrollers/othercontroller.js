@@ -37,10 +37,10 @@ const subscribeNewsletter = async (req, res) => {
           <h2>Thank You for Subscribing!</h2>
           <p>Dear Subscriber,</p>
           <p>We are thrilled to have you with us. Stay tuned for our latest updates and offers!</p>
-          <a href="https://med-space.vercel.app/" style="display: inline-block; padding: 10px 20px; margin-top: 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px;">
+          <a href="https://sehat-bridge.vercel.app/" style="display: inline-block; padding: 10px 20px; margin-top: 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px;">
             Explore More
           </a>
-          <p style="margin-top: 30px;">Best Regards,<br>Med-space</p>
+          <p style="margin-top: 30px;">Best Regards,<br>SehatBridg</p>
         </div>
       `,
     });
@@ -76,7 +76,7 @@ const sendNewsletterUpdate = async (req, res) => {
           <div style="font-family: Arial, sans-serif;">
             <h2>${subject}</h2>
             <p>${message}</p>
-            <p style="margin-top: 30px;">Best Regards,<br>Med-space Team</p>
+            <p style="margin-top: 30px;">Best Regards,<br>SehatBridge Team</p>
           </div>
         `,
       })
