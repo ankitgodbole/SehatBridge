@@ -1,16 +1,17 @@
-// routes/hospital/hospitalapi.js
-
 const express = require("express");
 const router = express.Router();
 
-// Handle POST request for hospital OPD registration or emergencies
+// POST /hospitalapi/emergency
 router.post("/emergency", (req, res) => {
   const { name, age, symptoms } = req.body;
 
-  // You could validate and store this data in a DB here
-  console.log("Received emergency registration:", { name, age, symptoms });
+  if (!name || !age || !symptoms) {
+    return res.status(400).json({ success: false, message: "Missing required fields" });
+  }
 
-  res.status(201).json({
+  console.log("Emergency received:", req.body);
+
+  res.status(200).json({
     success: true,
     message: "Emergency registration received successfully!",
     data: { name, age, symptoms },

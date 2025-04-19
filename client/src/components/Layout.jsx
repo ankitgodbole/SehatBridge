@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ScrollToTop from './ScrollToTop';
 import Chatbot from '../Medical-Chatbot/Chatbot';
-
+import EmergencyForm from '../pages/EmergencyForm'; // ✅ Already imported
 import Home from '../pages/Home';
 import AboutPage from '../pages/About';
 import ServicePage from '../pages/Service';
@@ -27,7 +27,7 @@ import PrivateRoute from '../privateroute/privateroute';
 import Success from '../pages/Success';
 import Newsletters from '../pages/Newsletters';
 import PredictSkin from '../pages/SkinDiseasePredictor';
-import DiseasePredictor from './DiseasePredictor'; // ✅ NEW IMPORT
+import DiseasePredictor from './DiseasePredictor'; // ✅ Already imported
 
 function Layout() {
   const location = useLocation();
@@ -52,7 +52,8 @@ function Layout() {
     '/forgot-password',
     '/newsletter-dashboard',
     '/predict-skin',
-    '/predict-disease' // ✅ ADDED ROUTE FOR DISEASE PREDICTION
+    '/predict-disease',
+    '/emergency' // ✅ ADD this route to show navbar/footer
   ];
 
   const showNavAndFooter = showNavAndFooterRoutes.includes(location.pathname);
@@ -83,7 +84,8 @@ function Layout() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/newsletter-dashboard" element={<Newsletters />} />
           <Route path="/predict-skin" element={<PredictSkin />} />
-          <Route path="/predict-disease" element={<DiseasePredictor />} /> {/* ✅ NEW ROUTE */}
+          <Route path="/predict-disease" element={<DiseasePredictor />} />
+          <Route path="/emergency" element={<EmergencyForm />} /> {/* ✅ NEW ROUTE */}
 
           {/* Protected Routes */}
           <Route element={<PrivateRoute />}>

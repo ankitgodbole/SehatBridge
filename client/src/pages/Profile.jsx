@@ -239,7 +239,7 @@ const ProfilePage = () => {
           )}
         </div>
 
-        {/* Doctors Section */}
+        {/* Doctors Section
         <div className="doctors-section">
           <div className="flex mb-4 pb-4 justify-content-center m-auto">
             <h3 className="m-auto">Doctors</h3>
@@ -290,10 +290,10 @@ const ProfilePage = () => {
               </tbody>
             </table>
           )}
-        </div>
+        </div> */}
       </div>
 
-      {/* Add Doctor Modal */}
+      {/* Add Doctor Modal
       {isAddingDoctor && (
         <div className="modal">
           <div className="modal-content">
@@ -370,7 +370,7 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Edit Profile Modal */}
       {isEditing && (

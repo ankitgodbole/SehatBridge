@@ -4,7 +4,6 @@ import axios from 'axios';
 import '../styles/OPD.css';
 import '../styles/Loader.css';
 import jsPDF from 'jspdf';
-// import pincodes from 'indian-pincodes';
 import { pininfo } from 'indian_address';
 import { AiOutlineDownload } from 'react-icons/ai';
 import { TailSpin } from 'react-loader-spinner';
@@ -28,10 +27,8 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-// import Button  from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-//steps name
 const steps = ['Personal information', 'Contact information', 'upload image'];
 
 function OPDRegistrationForm() {
@@ -60,15 +57,10 @@ function OPDRegistrationForm() {
   const [appointmentDetails, setAppointmentDetails] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // steps state
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
-  // steps method
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
+  const isStepSkipped = (step) => skipped.has(step);
 
   const handleNext = () => {
     let newSkipped = skipped;
@@ -76,7 +68,6 @@ function OPDRegistrationForm() {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
@@ -89,6 +80,7 @@ function OPDRegistrationForm() {
     setActiveStep(0);
   };
 
+  // Validation function for all fields
   const validate = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
@@ -122,8 +114,8 @@ function OPDRegistrationForm() {
     } else {
       console.log('Pincode details:', pininfo[formData.pincode]);
     }
-    if (!formData.reason.trim()) newErrors.reason = 'Reason is required'; // Validation for reason
-    if (!formData.date) newErrors.date = 'Date is required'; // Validation for date
+    if (!formData.reason.trim()) newErrors.reason = 'Reason is required';
+    if (!formData.date) newErrors.date = 'Date is required';
 
     if (formData.report.length > 0) {
       const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
@@ -142,6 +134,7 @@ function OPDRegistrationForm() {
     return newErrors;
   };
 
+  // Change handler for all input fields
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'report') {
@@ -156,131 +149,147 @@ function OPDRegistrationForm() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = (e) => {
+  e.preventDefault();
 
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
 
-    setIsSubmitting(true);
+  setIsSubmitting(true);
 
-    const submissionData = {
-      name: formData.name,
-      email: formData.email,
-      age: formData.age,
-      gender: formData.gender,
-      contact: formData.contact,
-      pincode: formData.pincode,
-      reason: formData.reason,
-      date: formData.date,
-    };
-    
-    console.log("API URL:", databaseUrls.hospitals.emergency);
-
-
-    axios
-      .post(databaseUrls.hospitals.emergency, submissionData)
-      .then((response) => {
-        console.log('Successfully registered!', response.data);
-        setRegistrationDetails(submissionData);
-      
-        // ✅ Structured assignment to prevent 'undefined' errors
-        setAppointmentDetails({
-          appointment: {
-            date: response.data.appointment?.date || formData.date || 'N/A',
-            reason: response.data.appointment?.reason || formData.reason || 'N/A',
-          },
-          hospital: {
-            name: response.data.hospital?.name || 'Pending Assignment',
-            phone: response.data.hospital?.phone || 'Not Available',
-            address: {
-              street: response.data.hospital?.address?.street || 'Not Provided',
-              city: response.data.hospital?.address?.city || 'Not Provided',
-              state: response.data.hospital?.address?.state || 'Not Provided',
-              postalCode: response.data.hospital?.address?.postalCode || 'Not Provided',
-            },
-          },
-        });
-        
-      
-        setShowModal(true);
-        setFormData({
-          name: '',
-          email: '',
-          age: '',
-          gender: '',
-          contact: '',
-          address: '',
-          department: '',
-          pincode: '',
-          reason: '',
-          date: '',
-          report: [],
-        });
-      })
-      
-      .catch((error) => {
-        console.error('There was an error registering!', error);
-        alert('Registration failed. Please try again.');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+  const submissionData = {
+    name: formData.name,
+    email: formData.email,
+    age: formData.age,
+    gender: formData.gender,
+    contact: formData.contact,
+    address: formData.address,
+    department: formData.department,
+    pincode: formData.pincode,
+    reason: formData.reason,
+    date: formData.date,
+    report: formData.report,
   };
-  console.log("registrationDetails:", registrationDetails);
-  console.log("appointmentDetails:", appointmentDetails);
-  
-  
+
+  axios
+    .post('http://localhost:8080/hospitalapi/opd/register', submissionData)
+    .then((response) => {
+      console.log('Successfully registered!', response.data);
+      setRegistrationDetails(submissionData);
+      setAppointmentDetails(response.data);
+      setShowModal(true);
+      downloadPDF(submissionData, response.data);  // Pass data directly to PDF function
+
+      setFormData({
+        name: '',
+        email: '',
+        age: '',
+        gender: '',
+        contact: '',
+        address: '',
+        department: '',
+        pincode: '',
+        reason: '',
+        date: '',
+        report: [],
+      });
+    })
+    .catch((error) => {
+      console.error('There was an error registering!', error);
+      alert('Registration failed. Please try again.');
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
+};
+
   const downloadPDF = () => {
-    if (!registrationDetails || !appointmentDetails) {
-      alert('Please complete the registration first.');
-      return;
-    }
-  
     const doc = new jsPDF();
   
-    // Backgrounds
-    doc.setFillColor(252, 248, 230);
+    // Add light cream background for main content
+    doc.setFillColor(252, 248, 230); // Light cream for body
     doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
   
-    doc.setFillColor(41, 128, 185);
+    // Add darker header background for logo
+    doc.setFillColor(41, 128, 185); // Professional blue for header
     doc.rect(0, 0, doc.internal.pageSize.width, 45, 'F');
   
+    // Set text color to white for header content
     doc.setTextColor(255, 255, 255);
+  
+    // Logo (add your base64 logo image here)
     var img = new Image();
-    img.src = '/1.png';
+    img.src = '/1.png'; // Replace with your logo path
     doc.addImage(img, 'png', 85, 5, 40, 15);
+  
+    // Header text in white
     doc.setFontSize(14);
     doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
     doc.setFontSize(10);
     doc.text('Generated from SehatBridge', 105, 36, { align: 'center' });
   
+    // Switch to dark text for body content
+    doc.setTextColor(44, 62, 80); // Dark blue-grey for better readability
+  
     // Body
-    doc.setTextColor(44, 62, 80);
     doc.setFontSize(12);
     doc.text('OPD Registration Details', 20, 60);
-    doc.setDrawColor(41, 128, 185);
-    doc.line(20, 65, 190, 65);
+    doc.setDrawColor(41, 128, 185); // Blue line color
+    doc.line(20, 65, 190, 65); // Decorative line under section header
   
-    const { name, age } = registrationDetails;
-    const { appointment, hospital } = appointmentDetails;
-    const { address } = hospital;
+    // Ensure all values are available before using them
+    const name = registrationDetails?.name || 'Not Provided';
+    const age = registrationDetails?.age || 'Not Provided';
+    const appointmentDate = appointmentDetails?.appointment?.date || 'Not Available';
+    const reason = appointmentDetails?.appointment?.reason || 'Not Provided';
+    const hospitalName = appointmentDetails?.hospital?.name || 'Not Available';
+    const hospitalAddress = appointmentDetails?.hospital?.address
+      ? `${appointmentDetails.hospital.address.street}, ${appointmentDetails.hospital.address.city}, ${appointmentDetails.hospital.address.state}, ${appointmentDetails.hospital.address.postalCode}`
+      : 'Not Available';
+    const hospitalPhone = appointmentDetails?.hospital?.phone || 'Not Available';
   
-    doc.text(`Name: ${name || 'N/A'}`, 20, 75);
-    doc.text(`Age: ${age || 'N/A'}`, 20, 85);
-    doc.text(`Date of Appointment: ${appointment?.date || 'N/A'}`, 20, 95);
-    doc.text(`Reason: ${appointment?.reason || 'N/A'}`, 20, 105);
-    doc.text(`Hospital: ${hospital?.name || 'N/A'}`, 20, 115);
-    doc.text(`Address: ${address?.street || 'N/A'}, ${address?.city || 'N/A'}, ${address?.state || 'N/A'}, ${address?.postalCode || 'N/A'}`, 20, 125);
-    doc.text(`Contact: ${hospital?.phone || 'N/A'}`, 20, 135);
+    // Adding content to PDF
+    doc.text(`Name: ${name}`, 20, 75);
+    doc.text(`Age: ${age}`, 20, 85);
+    doc.text(`Date of Appointment: ${appointmentDate}`, 20, 95);
+    doc.text(`Reason: ${reason}`, 20, 105);
+    doc.text(`Hospital: ${hospitalName}`, 20, 115);
+    doc.text(`Address: ${hospitalAddress}`, 20, 125);
+    doc.text(`Contact: ${hospitalPhone}`, 20, 135);
   
-    doc.save('Appointment_Confirmation.pdf');
+    // Footer with blue background
+    const pageCount = doc.internal.getNumberOfPages();
+    doc.setFontSize(10);
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+  
+      // Add footer background
+      doc.setFillColor(41, 128, 185);
+      doc.rect(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, 20, 'F');
+  
+      // Footer text in white
+      doc.setTextColor(255, 255, 255);
+      doc.text(
+        `Page ${i} of ${pageCount}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 12,
+        { align: 'center' }
+      );
+      doc.text(
+        'Thank you for choosing Our Hospital. Please bring this document on the day of your appointment.\n 2025 SehatBridge. All rights reserved.',
+        105,
+        doc.internal.pageSize.height - 6,
+        { align: 'center' }
+      );
+    }
+  
+    // Save PDF
+    doc.save('appointment-details.pdf');
   };
   
-
 
   return (
     <>
@@ -606,14 +615,13 @@ function OPDRegistrationForm() {
             </button>
 
             {/* PDF download icon in the lower right corner */}
-            <div className="download-icon" onClick={() => downloadPDF(registrationDetails, appointmentDetails)}>
-  <AiOutlineDownload
-    className={dark === 'dark' ? 'text-yellow-400' : 'text-black'}
-    size={32}
-    color="#007bff"
-  />
-</div>
-
+            <div className="download-icon" onClick={downloadPDF}>
+              <AiOutlineDownload
+                className={dark === 'dark' ? 'text-yellow-400' : 'text-black'}
+                size={32}
+                color="#007bff"
+              />
+            </div>
 
             {/* Footer */}
             <footer

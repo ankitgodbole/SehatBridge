@@ -19,6 +19,9 @@ const client = require("prom-client");
 const { connectDB, corsConfig } = require("./utils");
 const Hospital = require("./models/hospital");
 const { createUserFromGoogleSignIn } = require("./controllers/auth/authController");
+const emergencyRoute = require('./routes/emergency');
+const opdRoutes = require('./routes/opdapi'); // make sure path is correct
+
 require("dotenv").config();
 
 // JWT Secret Key
@@ -57,6 +60,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/hospitalapi', emergencyRoute); // Mounting the route
 
 // Passport Google OAuth
 passport.use(
@@ -190,7 +195,8 @@ app.use("/auth", profileRouter);
 // Hospital Routes
 app.use("/hospitalapi/hospitals", hospitalRouter);
 app.use("/hospitalapi/appointments", appointmentRouter);
-app.use("/hospitalapi/emergency", emergencyRouter);
+app.use("/hospitalapi", emergencyRouter);
+app.use('/hospitalapi', opdRoutes);
 
 // Other Routes
 app.use("/otherroutes", otherroutes);

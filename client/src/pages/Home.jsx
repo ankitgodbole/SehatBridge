@@ -168,6 +168,21 @@ function Home() {
                   Book Appointment
                 </motion.button>
               </Link>
+               {/* Emergency Button */}
+  <Link to="/emergency">
+    <motion.button
+      className={`px-6 py-3 rounded-full text-lg font-semibold shadow-md transition-all duration-300 ${
+        dark === 'dark'
+          ? 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800'
+          : 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700'
+      }`}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+    >
+      Emergency
+    </motion.button>
+  </Link>
               <Link to="/services">
                 <motion.button
                   className={`px-6 py-3 rounded-full text-lg font-semibold shadow-md transition-all duration-300 ${dark === 'dark'
