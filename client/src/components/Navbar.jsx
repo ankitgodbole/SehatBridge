@@ -112,16 +112,7 @@ const Navbar = () => {
             <p className="hover:brightness-50 hover:font-semibold">Home</p>
           </NavLink>
 
-          <NavLink
-            className={({ isActive }) =>
-              `${isActive ? 'border-b border-white ' : ''} flex gap-2 items-baseline`
-            }
-            to="/about"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <AiOutlineInfoCircle />
-            <p className="hover:brightness-50 hover:font-semibold">About</p>
-          </NavLink>
+          
 
           {/* Conditional Links */}
           {!isAuthenticated && (
@@ -201,7 +192,16 @@ const Navbar = () => {
               </p>
             </NavLink>
           )}
-
+          <NavLink
+            className={({ isActive }) =>
+              `${isActive ? 'border-b border-white ' : ''} flex gap-2 items-baseline`
+            }
+            to="/about"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <AiOutlineInfoCircle />
+            <p className="hover:brightness-50 hover:font-semibold">About</p>
+          </NavLink>
           {isAuthenticated ? (
             <>
 
@@ -265,13 +265,7 @@ const Navbar = () => {
             <p className="font-bold text-lg hover:brightness-50">Home</p>
           </NavLink>
 
-          <NavLink
-            to="/about"
-            className="flex justify-center items-center gap-2"
-          >
-            <AiOutlineInfoCircle />
-            <p className="font-bold text-lg hover:brightness-50">About</p>
-          </NavLink>
+         
 
           <NavLink
         to="/predict-skin"
@@ -330,6 +324,14 @@ const Navbar = () => {
               </p>
             </NavLink>
           )}
+
+<NavLink
+            to="/about"
+            className="flex justify-center items-center gap-2"
+          >
+            <AiOutlineInfoCircle />
+            <p className="font-bold text-lg hover:brightness-50">About</p>
+          </NavLink>
 
           {isAuthenticated ? (
             <>
