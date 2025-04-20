@@ -32,7 +32,7 @@ const teamMembers = [
     name: 'Shital Gokhe',
     role: 'Machine Learning',
     description:
-      'Simranpreet creates compelling graphics and visual elements that enhance the user experience.',
+      'Shital creates compelling graphics and visual elements that enhance the user experience.',
     imageUrl: shital,
     linkedin: 'https://www.linkedin.com/in/shital-gokhe-6032a2304/',
     github: 'https://github.com/shital2005421',
