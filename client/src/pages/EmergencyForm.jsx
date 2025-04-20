@@ -96,16 +96,43 @@ function EmergencyForm() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Emergency Form</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-        <input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} required />
-        <input type="text" placeholder="Reason of Emergency" value={symptoms} onChange={(e) => setSymptoms(e.target.value)} required />
-        <button type="submit">Submit</button>
+    <div className="form-container max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl my-[30px]">
+<h2 className="text-2xl font-semibold mb-6 text-center">Emergency Form</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <input
+          type="number"
+          placeholder="Age"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          required
+          className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <input
+          type="text"
+          placeholder="Reason of Emergency"
+          value={symptoms}
+          onChange={(e) => setSymptoms(e.target.value)}
+          required
+          className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md transition duration-300"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
+
 }
 
 export default EmergencyForm;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// Sample Disease Data
 const diseaseInfo = [
   {
     name: "Acne",
@@ -42,6 +41,7 @@ const diseaseInfo = [
 
 const SkinDiseasePredictor = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -50,8 +50,9 @@ const SkinDiseasePredictor = () => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
       setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
       setError(null);
-      setResult(null); // Reset previous result
+      setResult(null);
     } else {
       setError("Please upload a valid image file.");
     }
@@ -76,7 +77,9 @@ const SkinDiseasePredictor = () => {
 
       const { disease_name, disease_description, disease_treatment } = response.data;
 
-      const matchedDisease = diseaseInfo.find(disease => disease.name.toLowerCase() === disease_name.toLowerCase());
+      const matchedDisease = diseaseInfo.find(
+        disease => disease.name.toLowerCase() === disease_name.toLowerCase()
+      );
 
       if (matchedDisease) {
         setResult({
@@ -112,14 +115,12 @@ const SkinDiseasePredictor = () => {
 
       {selectedFile && result && (
         <div style={styles.resultSection}>
-          <h2>{result.disease_name}</h2>
-          <p>{result.disease_description}</p>
-          <h4>Treatment:</h4>
-          <p>{result.disease_treatment}</p>
-          <h4>Medicines:</h4>
-          <p>{result.medicine}</p>
-          <h4>Precautions:</h4>
-          <p>{result.precautions}</p>
+          <img src={previewUrl} alt="Uploaded" style={styles.imagePreview} />
+          <h2 style={styles.resultTitle}>{result.name}</h2>
+          <p><strong>Description:</strong> {result.disease_description}</p>
+          <p><strong>Treatment:</strong> {result.disease_treatment}</p>
+          <p><strong>Medicines:</strong> {result.medicine}</p>
+          <p><strong>Precautions:</strong> {result.precautions}</p>
         </div>
       )}
     </div>
@@ -128,8 +129,9 @@ const SkinDiseasePredictor = () => {
 
 const styles = {
   container: {
+    paddingTop: "80px",
     padding: "20px",
-    maxWidth: "600px",
+    maxWidth: "700px",
     margin: "0 auto",
     textAlign: "center",
   },
@@ -148,17 +150,39 @@ const styles = {
   button: {
     backgroundColor: "#4CAF50",
     color: "white",
-    padding: "15px 32px",
+    padding: "10px 25px",
     border: "none",
     cursor: "pointer",
     marginTop: "10px",
+    fontSize: "16px",
+    borderRadius: "6px",
   },
   error: {
     color: "red",
+    marginTop: "10px",
   },
   resultSection: {
-    marginTop: "30px",
+    marginTop: "40px",
+    padding: "20px",
+    backgroundColor: "#f9f9f9",
+    borderRadius: "12px",
+    boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
     textAlign: "left",
+  },
+  resultTitle: {
+    fontSize: "24px",
+    marginBottom: "10px",
+    color: "#333",
+    textAlign: "center",
+  },
+  imagePreview: {
+    width: "100%",
+    maxWidth: "300px",
+    height: "auto",
+    borderRadius: "10px",
+    margin: "0 auto 20px",
+    display: "block",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
   }
 };
 
