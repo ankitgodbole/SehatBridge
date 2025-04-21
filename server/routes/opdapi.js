@@ -22,4 +22,24 @@ router.post('/opd/register', (req, res) => {
   });
 });
 
+
+// Route to get OPD registration data by user ID or email
+router.get('/opd/profile/:userId', async (req, res) => {
+  const { userId } = req.params; // Extract the user ID from the URL parameter
+  
+  try {
+    // Find the registration data for the given userId (or email if preferred)
+    const registrationData = await OPDRegistration.findOne({ email: userId }); // Assuming email is used as userId
+
+    if (!registrationData) {
+      return res.status(404).json({ success: false, message: 'No registration found for this user.' });
+    }
+
+    res.status(200).json({ success: true, data: registrationData });
+  } catch (error) {
+    console.error('Error fetching profile data:', error);
+    res.status(500).json({ success: false, message: 'Server error. Please try again.' });
+  }
+});
+
 module.exports = router;

@@ -243,13 +243,13 @@ function OPDRegistrationForm() {
     // Ensure all values are available before using them
     const name = registrationDetails?.name || 'Not Provided';
     const age = registrationDetails?.age || 'Not Provided';
-    const appointmentDate = appointmentDetails?.appointment?.date || 'Not Available';
-    const reason = appointmentDetails?.appointment?.reason || 'Not Provided';
-    const hospitalName = appointmentDetails?.hospital?.name || 'Not Available';
-    const hospitalAddress = appointmentDetails?.hospital?.address
-      ? `${appointmentDetails.hospital.address.street}, ${appointmentDetails.hospital.address.city}, ${appointmentDetails.hospital.address.state}, ${appointmentDetails.hospital.address.postalCode}`
-      : 'Not Available';
-    const hospitalPhone = appointmentDetails?.hospital?.phone || 'Not Available';
+    const appointmentDate = registrationDetails?.date || 'Not Available';
+    const reason = registrationDetails?.reason || 'Not Provided';
+    const hospitalName = registrationDetails?.cname || 'Apollo Hospital Bhopal';
+    // const hospitalAddress = registrationDetails?.address
+    //   ? `${registrationDetails?.address.street}, ${registrationDetails?.address.city}, ${registrationDetails?.address.state}, ${registrationDetails?.address.postalCode}`
+    //   : 'Not Available';
+    // const hospitalPhone = registrationDetails?.phone || 'Not Available';
   
     // Adding content to PDF
     doc.text(`Name: ${name}`, 20, 75);
@@ -257,8 +257,8 @@ function OPDRegistrationForm() {
     doc.text(`Date of Appointment: ${appointmentDate}`, 20, 95);
     doc.text(`Reason: ${reason}`, 20, 105);
     doc.text(`Hospital: ${hospitalName}`, 20, 115);
-    doc.text(`Address: ${hospitalAddress}`, 20, 125);
-    doc.text(`Contact: ${hospitalPhone}`, 20, 135);
+    // doc.text(`Address: ${hospitalAddress}`, 20, 125);
+    // doc.text(`Contact: ${hospitalPhone}`, 20, 135);
   
     // Footer with blue background
     const pageCount = doc.internal.getNumberOfPages();
@@ -586,17 +586,17 @@ function OPDRegistrationForm() {
               <li>Age: {registrationDetails?.age || 28}</li>
               <li>
                 Date of Appointment:{' '}
-                {appointmentDetails?.appointment?.date || '2024-10-10'}
+                {registrationDetails?.date || '2024-10-10'}
               </li>
               <li>
                 Reason:{' '}
-                {appointmentDetails?.appointment?.reason || 'Routine check-up'}
+                {registrationDetails?.reason || 'Routine check-up'}
               </li>
               <li>
                 Hospital:{' '}
-                {appointmentDetails?.hospital?.name || 'City Hospital'}
+                {appointmentDetails?.hospital?.name || 'Apollo Hospital Bhopal'}
               </li>
-              <li>
+              {/* <li>
                 Address:{' '}
                 {appointmentDetails?.hospital?.address.street || 'Null'},{appointmentDetails?.hospital?.address.city || 'Null'},{appointmentDetails?.hospital?.address.state || 'Null'}
               </li>
@@ -604,7 +604,7 @@ function OPDRegistrationForm() {
               <li>
                 Phone:{' '}
                 {appointmentDetails?.hospital?.phone || 'City Hospital'}
-              </li>
+              </li> */}
             </ul>
 
             <button
