@@ -245,7 +245,7 @@ const LabTestMedipedia = () => {
                     className={`text-sm ${dark === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}
                   >
                     <i className="fas fa-user text-blue-600 pr-2"></i> by
-                    Med-Space
+                    SehatBridge
                   </span>
                 </div>
                 <button

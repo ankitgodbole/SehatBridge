@@ -1,336 +1,235 @@
 {
-    "intents": [
-      {
-         "tag": "greetings",
-         "patterns": [ 
-           "hello", 
-           "hey", 
-           "hi", 
-           "good day", 
-           "greetings", 
-           "what's up?", 
-           "how is it going" 
-         ],
-         "responses": [ 
-           "Hello! How can I help you today?", 
-           "Hey there! What can I do for you?", 
-           "Hi! How are you doing?", 
-           "Good day! How can I assist you?", 
-           "Hey! What's on your mind?" 
-         ],
-         "context": [ "" ]
-       }
-       ,
-       {
-         "context": [ "" ],
-         "patterns": [ 
-           "see you later", 
-           "goodbye", 
-           "have a good day", 
-           "bye", 
-           "see ya" 
-         ],
-         "responses": [ 
-           "Goodbye!", 
-           "See you later!", 
-           "Bye!", 
-           "Take care!", 
-           "Have a nice day!" 
-         ],
-         "tag": "goodbye"
-       }
-       ,
-       {
-         "context": [ "" ],
-         "patterns": [ "what is your name", "what should i call you", "what's your name?", "who are you?", "can you tell me your name" ],
-         "responses": [ "you can call me CareMitra!", "i am CareMitra!", "i am CareMitra your medical assistant" ],
-         "tag": "name"
-      }
-      ,
-  
-      {
-         "context": [ "" ],
-         "patterns": [ "I want treatment", "please help", "treatment", "please give me treatment", "need treatment" ],
-         "responses": [ "What symptoms are you experiencing?", "Please describe your condition.", "Tell me more about your issue." ],
-         "tag": "treatment"
-      }
-      ,
-      {
-         "tag": "Sore Throat",
-         "patterns": [
-            "How do you treat sore throat?",
-            "What to do if I get a sore throat?",
-            "Which medicine to take if I get a sore throat?",
-            "How to cure sore throat?"
-         ],
-         "responses": [
-            "1) Rest and drink lots of fluids.",
-            "2) Inhale steam: Run hot water, cover with a towel, and breathe deeply for 5-10 minutes.",
-            "3) Sip warm tea or chicken broth with honey (avoid honey for children under 12 months)."
-         ],
-         "context": [ "" ]
-      }
-      , 
-      [
-         {
-           "tag": "Gastrointestinal problems",
-           "patterns": [
-             "How do you treat gas problems?",
-             "what to do if i have Gastrointestinal problems?",
-             "Which medicine to take if I get gas problem?",
-             "How to cure Gas problems?"
-           ],
-           "responses": [
-             "1) Replenish body fluids 2)Do not take antidiarrheal drugs or laxatives or pain medication, unless specified by a medical professional.",
-             "3)Taking antacids may help, per recommendation of a healthcare professional.",
-             "4)If prone to frequent heartburns, seek medical help.",
-             "5)Taking meals that are not spicy regularly, can relieve ulcer pains.",
-             "6)Seek medical help, if conditions persist or continue to worsen"
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Skin problems",
-           "patterns": [
-             "How do you treat Skin problems?",
-             "what to do if i get a skin allergy?",
-             "Which medicine to take if I get a skin allergy?",
-             "How to cure skin allergy?"
-           ],
-           "responses": [
-             "1)Hydrocortisone cream.",
-             "2)Ointments like calamine lotion.",
-             "3)Antihistamines.",
-             "4)Cold compresses.",
-             "5)Oatmeal baths.",
-             "6)Talk to your doctor about what's best for your specific rash."
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Abdonominal Pain",
-           "patterns": [
-             "How do you treat Abdonominal Pain?",
-             "what to do if i get a Abdonominal Pain?",
-             "Which medicine to take if I get a Abdonominal Pain?",
-             "How to cure Abdonominal Pain?"
-           ],
-           "responses": [
-             "1)Provide clear fluids to sip, such as water, broth, or fruit juice diluted with water.",
-             "2)Serve bland foods, such as saltine crackers, plain bread, dry toast, rice, gelatin, or applesauce.",
-             "3)Avoid spicy or greasy foods and caffeinated or carbonated drinks until 48 hours after all symptoms have gone away."
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Bruises",
-           "patterns": [
-             "How do you treat Bruises?",
-             "what to do if i get a Bruise?",
-             "Which medicine to take if I get a Bruise?",
-             "How to cure Bruises?"
-           ],
-           "responses": [
-             "1)Ice the bruise with an ice pack wrapped in a towel.",
-             "2)Leave it in place for 10 to 20 minutes.",
-             "3)Repeat several times a day for a day or two as needed.",
-             "4)Compress the bruised area if it is swelling, using an elastic bandage."
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Broken Toe",
-           "patterns": [
-             "How do you treat a Broken Toe?",
-             "what to do if i get a Broken Toe?",
-             "Which medicine to take if I get a Broken Toe?",
-             "How to cure Broken Toe?"
-           ],
-           "responses": [
-             "1)To help decrease pain and swelling in a broken toe, elevate the foot, ice the injury, and stay off the foot.",
-             "2)Depending on the severity of the fracture, the toe may need to be put back into place (reduced), and some compound toe fractures may require surgery.",
-             "3) Most broken toes heal without complications in six weeks."
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Choking",
-           "patterns": [
-             "How do you treat Choking?",
-             "what to do if i get a Choke?",
-             "Which medicine to take if I get Choked?",
-             "How to cure Choking?"
-           ],
-           "responses": [
-             "1)Encourage them to keep coughing to try to clear the blockage.",
-             "2)Ask them to try to spit out the object if it's in their mouth.",
-             "3)If coughing doesn't work, start back blows and Abdonominal thrusts"
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Wound",
-           "patterns": [
-             "How do you treat a wound?",
-             "what to do if i get a Wound?",
-             "Which medicine to take if I get wounded?",
-             "How to cure a wound?"
-           ],
-           "responses": [
-             "1)Rinse the cut or wound with water and apply pressure with sterile gauze, a bandage, or a clean cloth.",
-             "2)If blood soaks through the bandage, place another bandage on top of the first and keep applying pressure.",
-             "3)Raise the injured body part to slow bleeding.",
-             "4)When bleeding stops, cover the wound with a new, clean bandage."
-           ],
-           "context": [ "" ]
-         },
-         {
-           "tag": "Diarrhea",
-           "patterns": [
-             "How do you treat Diarrhea?",
-             "what to do if i get Diarrhea?",
-             "Which medicine to take if I get Diarrhea?",
-             "How to cure Diarrhea?"
-           ],
-           "responses": [
-             "1)Hydrating the body is essential for recovering from diarrhea. This causes the body to lose electrolytes such as sodium and chloride.",
-             "2)It is highly recommended to avoid dairy products, as they may worsen diarrhea in some people.",
-             "3)However, if diarrhea lasts for more than 2 days, seek medical advice to avoid complications."
-           ],
-           "context": [ "" ]
-         }
-         ,
-         {
-            "tag": "Headache",
-            "patterns": [
-                "How do you treat a headache?",
-                "what to do if I have a headache?",
-                "Which medicine to take for a headache?",
-                "How to cure headache?"
-            ],
-            "responses": [
-                "1) Take pain relievers like ibuprofen or paracetamol. 2) Rest in a dark, quiet room. 3) Apply a cold or warm compress to the head. 4) Drink plenty of water to stay hydrated."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Cold and Cough",
-            "patterns": [
-                "How do you treat a cold and cough?",
-                "what to do if I have a cold and cough?",
-                "Which medicine to take for cold and cough?",
-                "How to cure cold and cough?"
-            ],
-            "responses": [
-                "1) Drink warm liquids like herbal tea or soup. 2) Take cough syrups or lozenges. 3) Use a saline nasal spray to clear nasal passages. 4) Rest and hydrate well."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Toothache",
-            "patterns": [
-                "How do you treat a toothache?",
-                "what to do if I have a toothache?",
-                "Which medicine to take for a toothache?",
-                "How to cure toothache?"
-            ],
-            "responses": [
-                "1) Rinse your mouth with warm salt water. 2) Take over-the-counter pain relievers like ibuprofen. 3) Apply a cold compress to the outside of the cheek. 4) Avoid eating hot, cold, or sugary foods."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Stomach Ache",
-            "patterns": [
-                "How do you treat a stomach ache?",
-                "what to do if I have a stomach ache?",
-                "Which medicine to take for a stomach ache?",
-                "How to cure stomach ache?"
-            ],
-            "responses": [
-                "1) Drink clear fluids like water or broth. 2) Avoid solid foods for a few hours. 3) Try a heating pad on your stomach to relieve pain. 4) If pain persists, consult a doctor."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Nausea",
-            "patterns": [
-                "How do you treat nausea?",
-                "what to do if I feel nauseous?",
-                "Which medicine to take for nausea?",
-                "How to cure nausea?"
-            ],
-            "responses": [
-                "1) Drink ginger tea or lemon water. 2) Rest in a calm, quiet place. 3) Eat bland foods like crackers or toast. 4) Avoid strong smells or heavy meals."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Fatigue",
-            "patterns": [
-                "How do you treat fatigue?",
-                "what to do if I feel tired all the time?",
-                "Which medicine to take for fatigue?",
-                "How to cure fatigue?"
-            ],
-            "responses": [
-                "1) Ensure you are getting 7-9 hours of sleep per night. 2) Drink water regularly to stay hydrated. 3) Eat balanced meals rich in vitamins. 4) Take short breaks throughout the day to relax and recharge."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Back Pain",
-            "patterns": [
-                "How do you treat back pain?",
-                "what to do if I have back pain?",
-                "Which medicine to take for back pain?",
-                "How to cure back pain?"
-            ],
-            "responses": [
-                "1) Apply a cold or warm compress to the back. 2) Take over-the-counter pain relievers. 3) Rest and avoid heavy lifting. 4) Try gentle stretching or yoga to relieve tension."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Insomnia",
-            "patterns": [
-                "How do you treat insomnia?",
-                "what to do if I can't sleep?",
-                "Which medicine to take for insomnia?",
-                "How to cure insomnia?"
-            ],
-            "responses": [
-                "1) Create a calming bedtime routine. 2) Limit screen time before bed. 3) Avoid caffeine in the afternoon and evening. 4) Try relaxation techniques like deep breathing."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Allergies",
-            "patterns": [
-                "How do you treat allergies?",
-                "what to do if I have an allergy?",
-                "Which medicine to take for allergies?",
-                "How to cure allergies?"
-            ],
-            "responses": [
-                "1) Take antihistamines to relieve symptoms. 2) Avoid triggers like pollen, dust, or pets. 3) Rinse your eyes and nose with saline solution. 4) Consult a doctor if symptoms are severe."
-            ],
-            "context": [ "" ]
-        },
-        {
-            "tag": "Leg Cramps",
-            "patterns": [
-                "How do you treat leg cramps?",
-                "what to do if I get a leg cramp?",
-                "Which medicine to take for leg cramps?",
-                "How to cure leg cramps?"
-            ],
-            "responses": [
-                "1) Stretch and massage the muscle gently. 2) Apply heat or cold to the affected area. 3) Drink water to stay hydrated. 4) Take magnesium supplements if cramps are frequent."
-            ],
-            "context": [ "" ]
-        }
-        
-      ]
-    ] 
-   }
+   "intents": [
+     {
+       "tag": "greetings",
+       "patterns": [
+         "hello", "hey", "hi", "good day", "greetings", "what's up?", "how is it going"
+       ],
+       "responses": [
+         "Hello! How can I help?", "Hey! What can I do for you?", "Hi! How are you?", "Good day! How can I assist?", "Hey! What's on your mind?"
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "goodbye",
+       "patterns": [
+         "see you later", "goodbye", "have a good day", "bye", "see ya"
+       ],
+       "responses": [
+         "Goodbye!", "See you later!", "Bye!", "Take care!", "Have a nice day!"
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "name",
+       "patterns": [
+         "what is your name", "what should i call you", "who are you?", "can you tell me your name"
+       ],
+       "responses": [
+         "You can call me CareMitra!", "I am CareMitra!", "I am CareMitra, your medical assistant"
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "treatment",
+       "patterns": [
+         "I want treatment", "please help", "treatment", "please give me treatment", "need treatment"
+       ],
+       "responses": [
+         "What symptoms are you experiencing?", "Please describe your condition.", "Tell me more about your issue."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Sore Throat",
+       "patterns": [
+         "How do you treat sore throat?", "What to do for sore throat?", "Which medicine for sore throat?", "How to cure sore throat?"
+       ],
+       "responses": [
+         "1) Rest and drink fluids.", "2) Inhale steam.", "3) Sip warm tea or broth with honey."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Gastrointestinal problems",
+       "patterns": [
+         "How to treat gas?", "what to do for gas?", "Medicine for gas?", "How to cure gas problems?"
+       ],
+       "responses": [
+         "1) Replenish fluids.", "2) Avoid antidiarrheal meds unless prescribed.", "3) Take antacids if recommended.", "4) Seek medical help if it persists."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Skin problems",
+       "patterns": [
+         "How to treat skin problems?", "What to do for skin allergy?", "Medicine for skin allergy?", "How to cure skin allergy?"
+       ],
+       "responses": [
+         "1) Hydrocortisone cream.", "2) Calamine lotion.", "3) Antihistamines.", "4) Cold compress."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Abdominal Pain",
+       "patterns": [
+         "How to treat abdominal pain?", "What to do for abdominal pain?", "Medicine for abdominal pain?", "How to cure abdominal pain?"
+       ],
+       "responses": [
+         "1) Clear fluids.", "2) Bland foods.", "3) Avoid spicy or greasy foods."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Bruises",
+       "patterns": [
+         "How to treat bruises?", "What to do for bruises?", "Medicine for bruises?", "How to cure bruises?"
+       ],
+       "responses": [
+         "1) Ice the bruise.", "2) Compress if swelling.", "3) Repeat as needed."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Broken Toe",
+       "patterns": [
+         "How to treat broken toe?", "What to do for broken toe?", "Medicine for broken toe?", "How to cure broken toe?"
+       ],
+       "responses": [
+         "1) Elevate and ice the foot.", "2) May need to set the toe.", "3) Most heal in six weeks."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Choking",
+       "patterns": [
+         "How to treat choking?", "What to do for choking?", "Medicine for choking?", "How to cure choking?"
+       ],
+       "responses": [
+         "1) Encourage coughing.", "2) Try to spit out the object.", "3) Start back blows and abdominal thrusts."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Wound",
+       "patterns": [
+         "How to treat a wound?", "What to do for a wound?", "Medicine for wound?", "How to cure wound?"
+       ],
+       "responses": [
+         "1) Rinse and apply pressure.", "2) Apply a bandage.", "3) Elevate the body part."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Diarrhea",
+       "patterns": [
+         "How to treat diarrhea?", "What to do for diarrhea?", "Medicine for diarrhea?", "How to cure diarrhea?"
+       ],
+       "responses": [
+         "1) Hydrate.", "2) Avoid dairy.", "3) See a doctor if it persists."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Frostbite",
+       "patterns": [
+         "How to treat frostbite?", "What to do for frostbite?", "Medicine for frostbite?", "How to cure frostbite?"
+       ],
+       "responses": [
+         "1) Get out of the cold.", "2) Rewarm gently.", "3) Apply a warm compress."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Heat Exhaustion",
+       "patterns": [
+         "How to treat heat exhaustion?", "What to do for heat exhaustion?", "Medicine for heat exhaustion?", "How to cure heat exhaustion?"
+       ],
+       "responses": [
+         "1) Move to a cool place.", "2) Lay down and elevate legs.", "3) Drink cool fluids."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Heat Stroke",
+       "patterns": [
+         "How to treat heat stroke?", "What to do for heat stroke?", "Medicine for heat stroke?", "How to cure heat stroke?"
+       ],
+       "responses": [
+         "1) Cool the body with cold water.", "2) Monitor for severe symptoms."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Insect Bites",
+       "patterns": [
+         "How to treat insect bite?", "What to do for insect bite?", "Medicine for insect bite?", "How to cure insect bite?"
+       ],
+       "responses": [
+         "1) Wash with soap and water.", "2) Apply a cold compress.", "3) Elevate the area."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Nose Bleed",
+       "patterns": [
+         "How to treat nosebleed?", "What to do for nosebleed?", "Medicine for nosebleed?", "How to cure nosebleed?"
+       ],
+       "responses": [
+         "1) Apply cold compress.", "2) Elevate the affected area."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Pulled Muscle",
+       "patterns": [
+         "How to treat pulled muscle?", "What to do for pulled muscle?", "Medicine for pulled muscle?", "How to cure pulled muscle?"
+       ],
+       "responses": [
+         "1) Apply ice for 15 minutes.", "2) Rest the muscle."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Rectal Bleeding",
+       "patterns": [
+         "How to treat rectal bleeding?", "What to do for rectal bleeding?", "Medicine for rectal bleeding?", "How to cure rectal bleeding?"
+       ],
+       "responses": [
+         "1) Drink lots of water.", "2) Use ice packs.", "3) Seek medical help if severe."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Sun Burn",
+       "patterns": [
+         "How to treat sunburn?", "What to do for sunburn?", "Medicine for sunburn?", "How to cure sunburn?"
+       ],
+       "responses": [
+         "1) Cool the skin.", "2) Drink water.", "3) Take pain relievers."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Testicle Pain",
+       "patterns": [
+         "How to treat testicle pain?", "What to do for testicle pain?", "Medicine for testicle pain?", "How to cure testicle pain?"
+       ],
+       "responses": [
+         "1) Take acetaminophen or ibuprofen.", "2) Apply an ice pack."
+       ],
+       "context": [ "" ]
+     },
+     {
+       "tag": "Vertigo",
+       "patterns": [
+         "How to treat vertigo?", "What to do for vertigo?", "Medicine for vertigo?", "How to cure vertigo?"
+       ],
+       "responses": [
+         "1) Rest and lie down.", "2) Call a healthcare provider if new symptoms appear."
+       ],
+       "context": [ "" ]
+     }
+   ]
+ }
+ 
