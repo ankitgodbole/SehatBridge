@@ -24,9 +24,10 @@ const DiseasePredictor = () => {
 
   const styles = {
     container: {
-      marginTop:"120px",
+      marginTop: '120px',
       maxWidth: '520px',
-      margin: '60px auto',
+      marginLeft: 'auto',
+      marginRight: 'auto',
       padding: '30px 25px',
       background: '#f0f4f8',
       borderRadius: '16px',
@@ -53,11 +54,6 @@ const DiseasePredictor = () => {
       border: '1px solid #ccc',
       borderRadius: '8px',
       fontSize: '15px',
-    },
-    inputFocus: {
-      borderColor: '#3498db',
-      boxShadow: '0 0 6px rgba(52, 152, 219, 0.4)',
-      outline: 'none',
     },
     button: {
       backgroundColor: '#3498db',

@@ -230,7 +230,7 @@ const ProfilePage = () => {
                         </motion.button>
                       </Link>
 
-        {/* Appointments Section */}
+        {/* Appointments Section
         <div className="appointments-section">
           <h3>Appointments</h3>
           {userData.appointments.length === 0 ? (
@@ -261,7 +261,7 @@ const ProfilePage = () => {
               </tbody>
             </table>
           )}
-        </div>
+        </div> */}
 
         {/* Doctors Section
         <div className="doctors-section">

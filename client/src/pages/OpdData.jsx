@@ -1,4 +1,3 @@
-// frontend/src/pages/opdData.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
@@ -14,9 +13,11 @@ const OpdData = () => {
   const [endDate, setEndDate] = useState('');
   const tableRef = useRef();
 
+  // Fetch data on initial load
   useEffect(() => {
     axios.get('http://localhost:8080/api/opd/all')
       .then((response) => {
+        console.log(response.data);  // Check the response structure
         setData(response.data);
         setFilteredData(response.data);
         setLoading(false);
@@ -28,6 +29,7 @@ const OpdData = () => {
       });
   }, []);
 
+  // Handle filtering logic
   useEffect(() => {
     let filtered = data;
 
@@ -51,8 +53,12 @@ const OpdData = () => {
     setFilteredData(filtered);
   }, [searchTerm, startDate, endDate, data]);
 
+  // Download filtered data as Excel
   const downloadExcel = () => {
     if (!filteredData.length) return;
+
+    // Log the filtered data to check if opdRegistrationNumber exists
+    console.log(filteredData);  // Debugging
 
     const worksheet = XLSX.utils.json_to_sheet(filteredData);
     const workbook = XLSX.utils.book_new();
@@ -103,6 +109,7 @@ const OpdData = () => {
         <table className="min-w-full table-fixed divide-y divide-gray-200">
           <thead className="bg-gradient-to-r from-indigo-100 to-purple-100">
             <tr>
+              <th className="w-[10%] px-4 py-3 text-left text-sm font-bold text-indigo-900 border-b">OPD Registration Number</th>
               <th className="w-[12%] px-4 py-3 text-left text-sm font-bold text-indigo-900 border-b">Name</th>
               <th className="w-[16%] px-4 py-3 text-left text-sm font-bold text-indigo-900 border-b">Email</th>
               <th className="w-[6%] px-4 py-3 text-left text-sm font-bold text-indigo-900 border-b">Age</th>
@@ -116,11 +123,14 @@ const OpdData = () => {
           <tbody className="bg-white divide-y divide-gray-100">
             {filteredData.length === 0 ? (
               <tr>
-                <td colSpan="8" className="text-center p-6 text-gray-500">No data available.</td>
+                <td colSpan="9" className="text-center p-6 text-gray-500">No data available.</td>
               </tr>
             ) : (
               filteredData.map((entry, index) => (
                 <tr key={index} className="hover:bg-indigo-50 transition-colors duration-200">
+                  <td className="px-4 py-2 text-gray-800">
+                    {entry.registrationId || 'N/A'} {/* Ensure fallback if data is missing */}
+                  </td>
                   <td className="px-4 py-2 text-gray-800 break-words">{entry.name}</td>
                   <td className="px-4 py-2 text-gray-800 break-words">{entry.email}</td>
                   <td className="px-4 py-2 text-gray-800">{entry.age}</td>

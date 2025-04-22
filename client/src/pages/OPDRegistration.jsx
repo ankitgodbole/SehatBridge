@@ -10,6 +10,8 @@ import { TailSpin } from 'react-loader-spinner';
 import { useRecoilValue } from 'recoil';
 import { mode } from '../store/atom';
 import { databaseUrls } from '../data/databaseUrls';
+import { toast } from 'react-toastify';
+
 import {
   Form,
   Input,
@@ -148,143 +150,148 @@ function OPDRegistrationForm() {
       setErrors({ ...errors, [name]: '' });
     }
   };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
- const handleSubmit = (e) => {
-  e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
-  const validationErrors = validate();
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    return;
-  }
+    setIsSubmitting(true);
 
-  setIsSubmitting(true);
+    const submissionData = {
+      name: formData.name,
+      email: formData.email,
+      age: formData.age,
+      gender: formData.gender,
+      contact: formData.contact,
+      address: formData.address,
+      department: formData.department,
+      pincode: formData.pincode,
+      reason: formData.reason,
+      date: formData.date,
+      report: formData.report,
+    };
 
-  const submissionData = {
-    name: formData.name,
-    email: formData.email,
-    age: formData.age,
-    gender: formData.gender,
-    contact: formData.contact,
-    address: formData.address,
-    department: formData.department,
-    pincode: formData.pincode,
-    reason: formData.reason,
-    date: formData.date,
-    report: formData.report,
+    axios
+      .post('http://localhost:8080/hospitalapi/opd/register', submissionData)
+      .then((response) => {
+        toast.success('Successfully registered!');
+
+        setRegistrationDetails(submissionData);
+        setAppointmentDetails(response.data);
+        setShowModal(true);
+
+        // Clear form
+        setFormData({
+          name: '',
+          email: '',
+          age: '',
+          gender: '',
+          contact: '',
+          address: '',
+          department: '',
+          pincode: '',
+          reason: '',
+          date: '',
+          report: [],
+        });
+      })
+      .catch((error) => {
+        console.error('There was an error registering!', error);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
-  axios
-    .post('http://localhost:8080/hospitalapi/opd/register', submissionData)
-    .then((response) => {
-      console.log('Successfully registered!', response.data);
-      setRegistrationDetails(submissionData);
-      setAppointmentDetails(response.data);
-      setShowModal(true);
-      downloadPDF(submissionData, response.data);  // Pass data directly to PDF function
+  const downloadPDF = () => {
+    const doc = new jsPDF();
 
-      setFormData({
-        name: '',
-        email: '',
-        age: '',
-        gender: '',
-        contact: '',
-        address: '',
-        department: '',
-        pincode: '',
-        reason: '',
-        date: '',
-        report: [],
-      });
-    })
-    .catch((error) => {
-      console.error('There was an error registering!', error);
-      alert('Registration failed. Please try again.');
-    })
-    .finally(() => {
-      setIsSubmitting(false);
-    });
-};
+    // Background
+    doc.setFillColor(252, 248, 230); // Light cream background
+    doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
 
-const downloadPDF = () => {
-  const doc = new jsPDF();
+    // Header background
+    doc.setFillColor(41, 128, 185); // Professional blue
+    doc.rect(0, 0, doc.internal.pageSize.width, 45, 'F');
 
-  // Background
-  doc.setFillColor(252, 248, 230); // Light cream background
-  doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
-
-  // Header background
-  doc.setFillColor(41, 128, 185); // Professional blue
-  doc.rect(0, 0, doc.internal.pageSize.width, 45, 'F');
-
-  // Header text styling
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(14);
-  doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
-  doc.setFontSize(10);
-  doc.text('Generated from Med-Space', 105, 36, { align: 'center' });
-
-  // Logo
-  const img = new Image();
-  img.src = '/1.png'; // Ensure this is a valid path or base64 image
-  doc.addImage(img, 'png', 85, 5, 40, 15);
-
-  // Switch to dark text for body
-  doc.setTextColor(44, 62, 80);
-  doc.setFontSize(12);
-
-  // Body Content
-  doc.text('OPD Registration Details', 20, 60);
-  doc.setDrawColor(41, 128, 185);
-  doc.line(20, 65, 190, 65);
-
-  // Fallbacks if data is undefined
-  const name = registrationDetails?.name || 'N/A';
-  const age = registrationDetails?.age || 'N/A';
-  const date = registrationDetails?.date || 'N/A';
-  const reason = registrationDetails.reason || 'N/A';
-  const hospitalName = registrationDetails.hospital?.name || 'Orthopedics';
-  const address = appointmentDetails?.hospital?.address || 'Neharu Nagar,Bhopal,462003';
-  const phone = appointmentDetails?.hospital?.phone || '9691100845';
-
-  doc.text(`Name: ${name}`, 20, 75);
-  doc.text(`Age: ${age}`, 20, 85);
-  doc.text(`Date of Appointment: ${date}`, 20, 95);
-  doc.text(`Reason: ${reason}`, 20, 105);
-  doc.text(`Hospital: ${hospitalName}`, 20, 115);
-  doc.text(
-    `Address: ${address.street || 'Neharu Nagar'}, ${address.city || 'Bhopal'}, ${address.state || 'MP'}, ${address.postalCode || '462003'}`,
-    20,
-    125
-  );
-  doc.text(`Contact: ${phone}`, 20, 135);
-
-  // Footer
-  const pageCount = doc.internal.getNumberOfPages();
-  doc.setFontSize(10);
-  for (let i = 1; i <= pageCount; i++) {
-    doc.setPage(i);
-    doc.setFillColor(41, 128, 185);
-    doc.rect(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, 20, 'F');
-
+    // Header text styling
     doc.setTextColor(255, 255, 255);
-    doc.text(
-      `Page ${i} of ${pageCount}`,
-      doc.internal.pageSize.width / 2,
-      doc.internal.pageSize.height - 12,
-      { align: 'center' }
-    );
-    doc.text(
-      'Thank you for choosing Our Hospital. Please bring this document on the day of your appointment.',
-      105,
-      doc.internal.pageSize.height - 6,
-      { align: 'center' }
-    );
-  }
+    doc.setFontSize(14);
+    doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text('Generated from Med-Space', 105, 36, { align: 'center' });
 
-  // Save PDF
-  doc.save('appointment-details.pdf');
-};
+    // Logo
+    const img = new Image();
+    img.src = '/1.png'; // Ensure this is a valid path or base64 image
+    doc.addImage(img, 'png', 85, 5, 40, 15);
+
+    // Switch to dark text for body
+    doc.setTextColor(44, 62, 80);
+    doc.setFontSize(12);
+
+    // Body Content
+    doc.text('OPD Registration Details', 20, 60);
+    doc.setDrawColor(41, 128, 185);
+    doc.line(20, 65, 190, 65);
+
+    // Fallbacks if data is undefined
+    const name = registrationDetails?.name || 'N/A';
+    const age = registrationDetails?.age || 'N/A';
+    const date = registrationDetails?.date || 'N/A';
+    const reason = registrationDetails?.reason || 'N/A';
+    const hospitalName = registrationDetails?.hospital?.name || 'Orthopedics';
+    const address = appointmentDetails?.hospital?.address || 'Neharu Nagar,Bhopal,462003';
+    const phone = appointmentDetails?.hospital?.phone || '9691100845';
+    // const registrationId = 
+    // registrationId.registrationId || 'N/A'; // Assuming registrationId is in appointmentDetails
+
+    // Display Registration ID
+    // doc.text(`Registration ID: ${registrationId}`, 20, 75); // Add Registration ID
+    doc.text(`Name: ${name}`, 20, 85);
+    doc.text(`Age: ${age}`, 20, 95);
+    doc.text(`Date of Appointment: ${date}`, 20, 105);
+    doc.text(`Reason: ${reason}`, 20, 115);
+    doc.text(`Hospital: ${hospitalName}`, 20, 125);
+    doc.text(
+      `Address: ${address.street || 'Neharu Nagar'}, ${address.city || 'Bhopal'}, ${address.state || 'MP'}, ${address.postalCode || '462003'}`,
+      20,
+      135
+    );
+    doc.text(`Contact: ${phone}`, 20, 145);
+
+    // Footer
+    const pageCount = doc.internal.getNumberOfPages();
+    doc.setFontSize(10);
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFillColor(41, 128, 185);
+      doc.rect(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, 20, 'F');
+
+      doc.setTextColor(255, 255, 255);
+      doc.text(
+        `Page ${i} of ${pageCount}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 12,
+        { align: 'center' }
+      );
+      doc.text(
+        'Thank you for choosing Our Hospital. Please bring this document on the day of your appointment.',
+        105,
+        doc.internal.pageSize.height - 6,
+        { align: 'center' }
+      );
+    }
+
+    // Save PDF
+    doc.save('appointment-details.pdf');
+  };
+  
 
 
   return (

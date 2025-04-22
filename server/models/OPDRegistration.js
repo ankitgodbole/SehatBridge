@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Define the schema for OPD Registration
 const opdRegistrationSchema = new mongoose.Schema({
+  registrationId: { type: String, required: true },  // Add registrationId field
   name: { type: String, required: true },
   email: { type: String, required: true },
   age: { type: Number, required: true },
@@ -15,7 +16,6 @@ const opdRegistrationSchema = new mongoose.Schema({
   report: { type: [String], required: true }, // Array for storing file paths of reports
 });
 
-// Create a model based on the schema
 const OPDRegistration = mongoose.model('OPDRegistration', opdRegistrationSchema);
 
 module.exports = OPDRegistration;

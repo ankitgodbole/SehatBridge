@@ -80,7 +80,7 @@ const AuthPage = () => {
       if (response.ok) {
         localStorage.setItem('token', data.token);
         notify('Login successful', 'success');
-        window.location.href = '/profile';
+        window.location.href = '/';
       } else {
         if (data.errors) {
           const backendErrors = {};

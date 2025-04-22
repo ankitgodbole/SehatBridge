@@ -129,10 +129,11 @@ const SkinDiseasePredictor = () => {
 
 const styles = {
   container: {
-    paddingTop: "80px",
+    marginTop: "120px", // changed from 80px to 120px
     padding: "20px",
     maxWidth: "700px",
-    margin: "0 auto",
+    marginLeft: "auto",
+    marginRight: "auto",
     textAlign: "center",
   },
   title: {
