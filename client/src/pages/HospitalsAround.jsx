@@ -71,7 +71,7 @@ const HospitalsAround = () => {
 
   async function findHospitalsNearby(lat, lng) {
     setLoadingHospitals(true);
-    const radius = 2000;
+    const radius = 20000;
 
     const query = `
       [out:json];
