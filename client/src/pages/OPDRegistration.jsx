@@ -206,90 +206,86 @@ function OPDRegistrationForm() {
     });
 };
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-  
-    // Add light cream background for main content
-    doc.setFillColor(252, 248, 230); // Light cream for body
-    doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
-  
-    // Add darker header background for logo
-    doc.setFillColor(41, 128, 185); // Professional blue for header
-    doc.rect(0, 0, doc.internal.pageSize.width, 45, 'F');
-  
-    // Set text color to white for header content
+const downloadPDF = () => {
+  const doc = new jsPDF();
+
+  // Background
+  doc.setFillColor(252, 248, 230); // Light cream background
+  doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+
+  // Header background
+  doc.setFillColor(41, 128, 185); // Professional blue
+  doc.rect(0, 0, doc.internal.pageSize.width, 45, 'F');
+
+  // Header text styling
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(14);
+  doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text('Generated from Med-Space', 105, 36, { align: 'center' });
+
+  // Logo
+  const img = new Image();
+  img.src = '/1.png'; // Ensure this is a valid path or base64 image
+  doc.addImage(img, 'png', 85, 5, 40, 15);
+
+  // Switch to dark text for body
+  doc.setTextColor(44, 62, 80);
+  doc.setFontSize(12);
+
+  // Body Content
+  doc.text('OPD Registration Details', 20, 60);
+  doc.setDrawColor(41, 128, 185);
+  doc.line(20, 65, 190, 65);
+
+  // Fallbacks if data is undefined
+  const name = registrationDetails?.name || 'N/A';
+  const age = registrationDetails?.age || 'N/A';
+  const date = registrationDetails?.date || 'N/A';
+  const reason = registrationDetails.reason || 'N/A';
+  const hospitalName = registrationDetails.hospital?.name || 'Orthopedics';
+  const address = appointmentDetails?.hospital?.address || 'Neharu Nagar,Bhopal,462003';
+  const phone = appointmentDetails?.hospital?.phone || '9691100845';
+
+  doc.text(`Name: ${name}`, 20, 75);
+  doc.text(`Age: ${age}`, 20, 85);
+  doc.text(`Date of Appointment: ${date}`, 20, 95);
+  doc.text(`Reason: ${reason}`, 20, 105);
+  doc.text(`Hospital: ${hospitalName}`, 20, 115);
+  doc.text(
+    `Address: ${address.street || 'Neharu Nagar'}, ${address.city || 'Bhopal'}, ${address.state || 'MP'}, ${address.postalCode || '462003'}`,
+    20,
+    125
+  );
+  doc.text(`Contact: ${phone}`, 20, 135);
+
+  // Footer
+  const pageCount = doc.internal.getNumberOfPages();
+  doc.setFontSize(10);
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFillColor(41, 128, 185);
+    doc.rect(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, 20, 'F');
+
     doc.setTextColor(255, 255, 255);
-  
-    // Logo (add your base64 logo image here)
-    var img = new Image();
-    img.src = '/1.png'; // Replace with your logo path
-    doc.addImage(img, 'png', 85, 5, 40, 15);
-  
-    // Header text in white
-    doc.setFontSize(14);
-    doc.text('Hospital Appointment Confirmation', 105, 30, { align: 'center' });
-    doc.setFontSize(10);
-    doc.text('Generated from SehatBridge', 105, 36, { align: 'center' });
-  
-    // Switch to dark text for body content
-    doc.setTextColor(44, 62, 80); // Dark blue-grey for better readability
-  
-    // Body
-    doc.setFontSize(12);
-    doc.text('OPD Registration Details', 20, 60);
-    doc.setDrawColor(41, 128, 185); // Blue line color
-    doc.line(20, 65, 190, 65); // Decorative line under section header
-  
-    // Ensure all values are available before using them
-    const name = registrationDetails?.name || 'Not Provided';
-    const age = registrationDetails?.age || 'Not Provided';
-    const appointmentDate = registrationDetails?.date || 'Not Available';
-    const reason = registrationDetails?.reason || 'Not Provided';
-    const hospitalName = registrationDetails?.cname || 'Apollo Hospital Bhopal';
-    // const hospitalAddress = registrationDetails?.address
-    //   ? `${registrationDetails?.address.street}, ${registrationDetails?.address.city}, ${registrationDetails?.address.state}, ${registrationDetails?.address.postalCode}`
-    //   : 'Not Available';
-    // const hospitalPhone = registrationDetails?.phone || 'Not Available';
-  
-    // Adding content to PDF
-    doc.text(`Name: ${name}`, 20, 75);
-    doc.text(`Age: ${age}`, 20, 85);
-    doc.text(`Date of Appointment: ${appointmentDate}`, 20, 95);
-    doc.text(`Reason: ${reason}`, 20, 105);
-    doc.text(`Hospital: ${hospitalName}`, 20, 115);
-    // doc.text(`Address: ${hospitalAddress}`, 20, 125);
-    // doc.text(`Contact: ${hospitalPhone}`, 20, 135);
-  
-    // Footer with blue background
-    const pageCount = doc.internal.getNumberOfPages();
-    doc.setFontSize(10);
-    for (let i = 1; i <= pageCount; i++) {
-      doc.setPage(i);
-  
-      // Add footer background
-      doc.setFillColor(41, 128, 185);
-      doc.rect(0, doc.internal.pageSize.height - 20, doc.internal.pageSize.width, 20, 'F');
-  
-      // Footer text in white
-      doc.setTextColor(255, 255, 255);
-      doc.text(
-        `Page ${i} of ${pageCount}`,
-        doc.internal.pageSize.width / 2,
-        doc.internal.pageSize.height - 12,
-        { align: 'center' }
-      );
-      doc.text(
-        'Thank you for choosing Our Hospital. Please bring this document on the day of your appointment.\n 2025 SehatBridge. All rights reserved.',
-        105,
-        doc.internal.pageSize.height - 6,
-        { align: 'center' }
-      );
-    }
-  
-    // Save PDF
-    doc.save('appointment-details.pdf');
-  };
-  
+    doc.text(
+      `Page ${i} of ${pageCount}`,
+      doc.internal.pageSize.width / 2,
+      doc.internal.pageSize.height - 12,
+      { align: 'center' }
+    );
+    doc.text(
+      'Thank you for choosing Our Hospital. Please bring this document on the day of your appointment.',
+      105,
+      doc.internal.pageSize.height - 6,
+      { align: 'center' }
+    );
+  }
+
+  // Save PDF
+  doc.save('appointment-details.pdf');
+};
+
 
   return (
     <>
@@ -547,12 +543,12 @@ function OPDRegistrationForm() {
                         {isSubmitting ? 'Registering...' : 'Register'}
                       </button>
 
-                      {/* <Link
+                      <Link
                           to="/"
                           className={`back-btn ${dark === 'dark' ? 'link-dark' : ''}`}
                         >
                           Back to Home
-                        </Link> */}
+                        </Link>
                     </div>
                   ) : (
                     <Button onClick={handleNext}>Next</Button>
@@ -594,17 +590,17 @@ function OPDRegistrationForm() {
               </li>
               <li>
                 Hospital:{' '}
-                {appointmentDetails?.hospital?.name || 'Apollo Hospital Bhopal'}
+                {registrationDetails?.hospital?.name || 'Orthopedics'}
               </li>
-              {/* <li>
+              <li>
                 Address:{' '}
-                {appointmentDetails?.hospital?.address.street || 'Null'},{appointmentDetails?.hospital?.address.city || 'Null'},{appointmentDetails?.hospital?.address.state || 'Null'}
+                {appointmentDetails?.hospital?.address.street || 'Neharu Nagar'},{appointmentDetails?.hospital?.address.city || 'Bhopal'},{appointmentDetails?.hospital?.address.state || '462003'}
               </li>
               
               <li>
                 Phone:{' '}
-                {appointmentDetails?.hospital?.phone || 'City Hospital'}
-              </li> */}
+                {appointmentDetails?.hospital?.phone || '9691100845'}
+              </li>
             </ul>
 
             <button

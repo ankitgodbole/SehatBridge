@@ -197,6 +197,7 @@ app.use("/hospitalapi/hospitals", hospitalRouter);
 app.use("/hospitalapi/appointments", appointmentRouter);
 app.use("/hospitalapi", emergencyRouter);
 app.use('/hospitalapi', opdRoutes);
+app.use('/api', opdRoutes);
 
 // Other Routes
 app.use("/otherroutes", otherroutes);

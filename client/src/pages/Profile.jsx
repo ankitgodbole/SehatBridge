@@ -2,8 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../store/userContext';
 import '../styles/UserProfile.css';
 import { databaseUrls } from '../data/databaseUrls';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+
+
 
 const ProfilePage = () => {
+  const [dark, setDark] = useState(false);
   const { isAuthenticated } = useContext(UserContext);
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // To toggle the modal visibility
@@ -22,6 +28,11 @@ const ProfilePage = () => {
 
   useEffect(() => {
     // Fetch the user data if authenticated
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      setDark(true);
+    }
+  
     const fetchUserData = async () => {
       if (isAuthenticated) {
         try {
@@ -205,6 +216,19 @@ const ProfilePage = () => {
             </>
           )}
         </div>
+        <Link to="/opd-data">
+                        <motion.button
+                          className={`px-6 py-3 rounded-full text-lg font-semibold shadow-md transition-all duration-300 ${dark === 'dark'
+                            ? 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800'
+                            : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700'
+                            }`}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                        >
+                          View OPD Registration
+                        </motion.button>
+                      </Link>
 
         {/* Appointments Section */}
         <div className="appointments-section">

@@ -110,7 +110,7 @@ const Footer = () => {
   // Define legal links with their paths if available
   const contactUsLinks = [
     { name: 'Business', path: '/business' },
-    // { name: 'Support Us', path: '/support-us' },
+    { name: 'Terms&Conditions', path: '/terms-and-conditions' },
     { name: 'Customer Care', path: '/customer-care' },
     { name: 'Newsletter', path: '/newsletter-dashboard' },
   ];

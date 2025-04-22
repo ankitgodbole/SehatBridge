@@ -1,6 +1,8 @@
 // routes/opdapi.js
 const express = require('express');
 const router = express.Router();
+const OPDRegistration = require('../models/OPDRegistration');
+
 
 // In-memory store or connect to DB
 const opdRegistrations = []; // Replace this with MongoDB/SQL insert later
@@ -41,5 +43,13 @@ router.get('/opd/profile/:userId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error. Please try again.' });
   }
 });
-
+router.get('/opd/all', async (req, res) => {
+  try {
+    const registrations = await OPDRegistration.find();
+    res.status(200).json(registrations);
+  } catch (error) {
+    console.error('Error fetching OPD data:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
 module.exports = router;

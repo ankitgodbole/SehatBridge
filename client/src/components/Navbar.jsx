@@ -193,6 +193,14 @@ const Navbar = () => {
             </NavLink>
           )}
           <NavLink
+            to="/blog"
+            className="flex justify-center items-center gap-2"
+          >
+            <MdHealing />
+            <p className="font-bold text-lg hover:brightness-50">Blogs</p>
+          </NavLink>
+
+          <NavLink
             className={({ isActive }) =>
               `${isActive ? 'border-b border-white ' : ''} flex gap-2 items-baseline`
             }
@@ -324,6 +332,13 @@ const Navbar = () => {
               </p>
             </NavLink>
           )}
+          <NavLink
+            to="/blog"
+            className="flex justify-center items-center gap-2"
+          >
+            <MdHealing />
+            <p className="font-bold text-lg hover:brightness-50">Blogs</p>
+          </NavLink>
 
 <NavLink
             to="/about"

@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout';
 import { useState, useEffect } from 'react';
 import Preloader from './components/PreLoader';
+
 function App() {
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(true);
 

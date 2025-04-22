@@ -3,7 +3,8 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ScrollToTop from './ScrollToTop';
 import Chatbot from '../Medical-Chatbot/Chatbot';
-import EmergencyForm from '../pages/EmergencyForm'; // ✅ Already imported
+import EmergencyForm from '../pages/EmergencyForm';
+import OpdData from '../pages/OpdData';
 import Home from '../pages/Home';
 import AboutPage from '../pages/About';
 import ServicePage from '../pages/Service';
@@ -27,33 +28,17 @@ import PrivateRoute from '../privateroute/privateroute';
 import Success from '../pages/Success';
 import Newsletters from '../pages/Newsletters';
 import PredictSkin from '../pages/SkinDiseasePredictor';
-import DiseasePredictor from './DiseasePredictor'; // ✅ Already imported
+import DiseasePredictor from './DiseasePredictor';
 
 function Layout() {
   const location = useLocation();
 
   const showNavAndFooterRoutes = [
-    '/',
-    '/about',
-    '/registerOPD',
-    '/checkOPDschedule',
-    '/success',
-    '/login',
-    '/register',
-    '/hospitals',
-    '/hospitalDetails',
-    '/panal',
-    '/profile',
-    '/services',
-    '/terms-and-conditions',
-    '/Labtest',
-    '/blog',
-    '/business',
-    '/forgot-password',
-    '/newsletter-dashboard',
-    '/predict-skin',
-    '/predict-disease',
-    '/emergency' // ✅ ADD this route to show navbar/footer
+    '/', '/about', '/registerOPD', '/checkOPDschedule', '/success',
+    '/login', '/register', '/hospitals', '/hospitalDetails', '/panal',
+    '/profile', '/services', '/terms-and-conditions', '/Labtest',
+    '/blog', '/business', '/forgot-password', '/newsletter-dashboard',
+    '/predict-skin', '/predict-disease', '/emergency', '/opd-data'
   ];
 
   const showNavAndFooter = showNavAndFooterRoutes.includes(location.pathname);
@@ -85,20 +70,20 @@ function Layout() {
           <Route path="/newsletter-dashboard" element={<Newsletters />} />
           <Route path="/predict-skin" element={<PredictSkin />} />
           <Route path="/predict-disease" element={<DiseasePredictor />} />
-          <Route path="/emergency" element={<EmergencyForm />} /> {/* ✅ NEW ROUTE */}
+          <Route path="/emergency" element={<EmergencyForm />} />
+          <Route path="/opd-data" element={<OpdData />} />
 
-          {/* Protected Routes */}
+          {/* Protected */}
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
 
-          {/* Fallback Routes */}
+          {/* Fallback */}
           <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
       </div>
 
-      {/* Chatbot and Footer logic */}
       {showNavAndFooter ? (
         <>
           <Chatbot />

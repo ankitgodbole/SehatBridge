@@ -5,13 +5,13 @@ const TermsAndConditions = () => {
   return (
     <Container>
       <Title>Terms and Conditions</Title>
-      <EffectiveDate>Effective Date: October 7, 2024</EffectiveDate>
+      <EffectiveDate>Effective Date: April 1, 2025</EffectiveDate>
 
       <CardSection>
         <Card>
           <SectionTitle>Introduction</SectionTitle>
           <SectionContent>
-            These Terms and Conditions govern your use of Medi-Connect’s platform. By accessing or using our services, you agree to be bound by these terms. Please read them carefully. Updates to these terms will be posted on this page, and the effective date will be modified accordingly.
+            These Terms and Conditions govern your use of SehatBridge platform. By accessing or using our services, you agree to be bound by these terms. Please read them carefully. Updates to these terms will be posted on this page, and the effective date will be modified accordingly.
           </SectionContent>
         </Card>
 
@@ -25,14 +25,14 @@ const TermsAndConditions = () => {
         <Card>
           <SectionTitle>Intellectual Property</SectionTitle>
           <SectionContent>
-            All content on this website, including text, images, and logos, is owned by Medi-Connect. Users are prohibited from using or distributing our intellectual property without explicit permission.
+            All content on this website, including text, images, and logos, is owned by SehatBridge. Users are prohibited from using or distributing our intellectual property without explicit permission.
           </SectionContent>
         </Card>
 
         <Card>
           <SectionTitle>Limitation of Liability</SectionTitle>
           <SectionContent>
-            Medi-Connect is not liable for any damages or losses arising from the use of the platform. This includes issues related to third-party content or factors beyond our control.
+          SehatBridge is not liable for any damages or losses arising from the use of the platform. This includes issues related to third-party content or factors beyond our control.
           </SectionContent>
         </Card>
 
@@ -53,14 +53,14 @@ const TermsAndConditions = () => {
         <Card>
           <SectionTitle>Changes to the Terms</SectionTitle>
           <SectionContent>
-            Medi-Connect reserves the right to modify these terms at any time. You will be notified of changes via email or a notification on the website.
+          SehatBridge reserves the right to modify these terms at any time. You will be notified of changes via email or a notification on the website.
           </SectionContent>
         </Card>
 
         <Card>
           <SectionTitle>Contact Information</SectionTitle>
           <SectionContent>
-            If you have any questions about these Terms and Conditions, please contact us at support@medi-connect.com.
+            If you have any questions about these Terms and Conditions, please contact us at support@SehatBridge.com.
           </SectionContent>
         </Card>
       </CardSection>
