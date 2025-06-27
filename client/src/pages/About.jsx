@@ -79,7 +79,7 @@ const teamMembers = [
     description:
       'Aman explores emerging technologies to integrate cutting-edge features into our platform.',
       
-    imageUrl: 'aman',
+    imageUrl: aman,
     linkedin: 'https://www.linkedin.com/in/aman-sharma-962830255/',
     github: '#',
     email: '#',
