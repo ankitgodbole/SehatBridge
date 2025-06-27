@@ -13,6 +13,7 @@ import kunal from '../assets/images/kunal.jpg';
 import anshika from '../assets/images/anshika.jpg';
 import shital from '../assets/images/shital.jpg';
 import akshat from '../assets/images/akshat.jpg';
+import aman from '../assets/images/aman.jpg';
 
 // Team member data
 const teamMembers = [
@@ -71,18 +72,18 @@ const teamMembers = [
     github: 'https://github.com/anshika15tomar',
     email: 'mailto:anshikatomar5588@gmail.com',
   },
-  // {
-  //   id: 6,
-  //   name: '-----',
-  //   role: '-----',
-  //   description:
-  //     '',
-  //     // Shubham explores emerging technologies to integrate cutting-edge features into our platform.
-  //   imageUrl: 'https://via.placeholder.com/150',
-  //   linkedin: 'https://www.linkedin.com/in/luson-basumatary',
-  //   github: 'https://github.com/luson045',
-  //   email: 'mailto:luson@example.com',
-  // },
+  {
+    id: 6,
+    name: 'Aman Sharma',
+    role: 'Backend Developer',
+    description:
+      'Aman explores emerging technologies to integrate cutting-edge features into our platform.',
+      
+    imageUrl: 'aman',
+    linkedin: 'https://www.linkedin.com/in/aman-sharma-962830255/',
+    github: '#',
+    email: '#',
+  },
 ];
 
 const AboutPage = () => {
