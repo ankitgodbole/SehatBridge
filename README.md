@@ -53,7 +53,7 @@ Demo: 🌐 **[Live App Preview](https://sehatbridge.tech2stack.com)**
 
 ```bash
 # Clone the repo
-git clone https://github.com/shivuu2005/SehatBridge.git
+git clone https://github.com/ankitgodbole/SehatBridge.git
 cd SehatBridge
 
 # Install dependencies
@@ -160,7 +160,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ### 📢 Connect with Me
 
 **Shivam Malviya**
-- 👤 GitHub: [@shivuu2005](https://github.com/shivuu2005)
+- 👤 GitHub: [@ankitgodbole](https://github.com/ankitgodbole)
 
 
 ---
